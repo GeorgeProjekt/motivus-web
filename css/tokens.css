@@ -1,0 +1,103 @@
+/*
+  MOTIVUS Design Tokens
+  Based on vizuální manuál + motivus-1 design system by Robert Šamárek
+  Extended for full website
+*/
+
+:root {
+  /* Colors - Light Mode */
+  --color-bg: #FAF9F7;
+  --color-bg-alt: #F2F0EC;
+  --color-text: #2D2A26;
+  --color-text-muted: #6B6560;
+  --color-accent: #8B7355;
+  --color-accent-hover: #A08565;
+  --color-forest: #3A4A38;
+  --color-forest-light: #4A5F47;
+  --color-border: #E5E2DD;
+  --color-card-bg: rgba(255, 255, 255, 0.6);
+  --color-card-border: rgba(139, 115, 85, 0.15);
+  --color-overlay: rgba(45, 42, 38, 0.03);
+
+  /* Typography */
+  --font-heading: 'Cormorant Garamond', 'Georgia', serif;
+  --font-body: 'Inter', 'SF Pro Text', system-ui, -apple-system, sans-serif;
+
+  /* Fluid Typography */
+  --size-display: clamp(3rem, 8vw, 5.5rem);
+  --size-h1: clamp(2.2rem, 5vw, 3.5rem);
+  --size-h2: clamp(1.8rem, 4vw, 2.8rem);
+  --size-h3: clamp(1.3rem, 3vw, 1.8rem);
+  --size-body: clamp(1rem, 1.8vw, 1.125rem);
+  --size-small: clamp(0.8rem, 1.5vw, 0.9rem);
+  --size-label: clamp(0.7rem, 1.2vw, 0.8rem);
+
+  /* Font Weights */
+  --weight-light: 300;
+  --weight-normal: 400;
+  --weight-medium: 500;
+  --weight-semibold: 600;
+
+  /* Line Heights */
+  --lh-tight: 1.1;
+  --lh-heading: 1.25;
+  --lh-normal: 1.7;
+
+  /* Letter Spacing */
+  --ls-wide: 0.08em;
+  --ls-wider: 0.15em;
+  --ls-heading: 0.03em;
+
+  /* Spacing */
+  --space-xs: 0.5rem;
+  --space-sm: 1rem;
+  --space-md: 2rem;
+  --space-lg: 4rem;
+  --space-xl: 6rem;
+  --space-2xl: 10rem;
+  --section-gap: clamp(5rem, 12vh, 10rem);
+
+  /* Borders */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+  --radius-round: 50%;
+
+  /* Shadows */
+  --shadow-soft: 0 2px 20px rgba(45, 42, 38, 0.05);
+  --shadow-card: 0 4px 30px rgba(45, 42, 38, 0.08);
+  --shadow-elevated: 0 8px 40px rgba(45, 42, 38, 0.12);
+
+  /* Animation */
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
+  --duration-fast: 200ms;
+  --duration-normal: 400ms;
+  --duration-slow: 800ms;
+  --duration-breathing: 4000ms;
+
+  /* Layout */
+  --container-max: 1200px;
+  --container-narrow: 800px;
+  --nav-height: 72px;
+}
+
+/* Dark Mode */
+:root.dark-mode {
+  --color-bg: #1A1918;
+  --color-bg-alt: #222120;
+  --color-text: #E8E4DF;
+  --color-text-muted: #9B9590;
+  --color-accent: #C4A77D;
+  --color-accent-hover: #D4B78D;
+  --color-forest: #5A7A57;
+  --color-forest-light: #6A8A67;
+  --color-border: #3A3835;
+  --color-card-bg: rgba(34, 33, 32, 0.7);
+  --color-card-border: rgba(196, 167, 125, 0.15);
+  --color-overlay: rgba(232, 228, 223, 0.03);
+  --shadow-soft: 0 2px 20px rgba(0, 0, 0, 0.15);
+  --shadow-card: 0 4px 30px rgba(0, 0, 0, 0.2);
+  --shadow-elevated: 0 8px 40px rgba(0, 0, 0, 0.3);
+}

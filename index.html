@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MOTIVUS — Sublevere Homines</title>
+  <meta name="description" content="Bezpečný prostor pro zastavení, zorientování a posílení vztahů. Transformační koučink, harmonizace, mužské a ženské kruhy, retreaty.">
+  <meta property="og:title" content="MOTIVUS — Sublevere Homines">
+  <meta property="og:description" content="Pozvedáme lidi. Transformační koučink, harmonizace a komunitní práce. Sdružení OSVČ se společným posláním.">
+  <meta property="og:type" content="website">
+  <meta name="theme-color" content="#8B7355">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="css/reset.css">
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/animations.css">
+</head>
+<body>
+
+  <!-- Canvas Background -->
+  <div class="canvas-container" aria-hidden="true">
+    <canvas id="canvas-layer-1"></canvas>
+    <canvas id="canvas-layer-2"></canvas>
+  </div>
+
+  <!-- Navigation -->
+  <nav class="nav" id="nav" role="navigation" aria-label="Hlavní navigace">
+    <a href="#hero" class="nav-logo">
+      <img src="images/logo.jpeg" alt="Motivus logo" width="36" height="36">
+      <span>MOTIVUS</span>
+    </a>
+
+    <div class="nav-links" id="nav-links">
+      <a href="#mise">Mise</a>
+      <a href="#pilire">4 Pilíře</a>
+      <a href="#sluzby">Služby</a>
+      <a href="#tym">Tým</a>
+      <a href="#projekt">Pošli to dál</a>
+      <a href="#kontakt">Kontakt</a>
+    </div>
+
+    <div class="nav-controls">
+      <button class="theme-toggle" id="theme-toggle" aria-label="Přepnout motiv">
+        <span class="theme-icon">☽</span>
+      </button>
+      <button class="nav-hamburger" id="nav-hamburger" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <main>
+
+    <!-- ========== HERO ========== -->
+    <section class="hero" id="hero">
+      <div class="hero-inner">
+        <p class="hero-label label">Motivus — sdružení OSVČ</p>
+        <h1 class="hero-motto">Sublevere Homines</h1>
+        <p class="hero-subtitle">Pozvedáme lidi. Bezpečný prostor pro zastavení, zorientování a posílení vztahů k sobě, partnerovi, dětem i životu.</p>
+        <a href="#sluzby" class="btn">Objevte naše služby</a>
+      </div>
+      <div class="hero-scroll-hint">
+        <span>scroll</span>
+        <div class="scroll-line"></div>
+      </div>
+    </section>
+
+    <!-- ========== MISE ========== -->
+    <section id="mise">
+      <div class="container-narrow text-center">
+        <div class="section-header reveal">
+          <span class="label">Naše mise</span>
+          <h2>Kompas, který nekřičí.<br>Kompas, který šeptá.</h2>
+          <div class="divider"></div>
+        </div>
+        <p class="reveal" style="font-size: var(--size-h3); font-family: var(--font-heading); font-weight: var(--weight-light); color: var(--color-text-muted); line-height: var(--lh-normal);">
+          MOTIVUS je prostor pro podporu holistické harmonie člověka prostřednictvím emoční práce, komunitního budování a péče o mentální a vztahové zdraví. Nemanipulujeme, nespěcháme, respektujeme jedinečnost každého návštěvníka.
+        </p>
+        <div class="reveal" style="margin-top: var(--space-lg); display: flex; justify-content: center; gap: var(--space-lg); flex-wrap: wrap;">
+          <div>
+            <div style="font-family: var(--font-heading); font-size: var(--size-h1); color: var(--color-accent);">10</div>
+            <div class="muted" style="font-size: var(--size-small);">ověřených technik</div>
+          </div>
+          <div>
+            <div style="font-family: var(--font-heading); font-size: var(--size-h1); color: var(--color-accent);">4</div>
+            <div class="muted" style="font-size: var(--size-small);">pilíře harmonie</div>
+          </div>
+          <div>
+            <div style="font-family: var(--font-heading); font-size: var(--size-h1); color: var(--color-accent);">3+</div>
+            <div class="muted" style="font-size: var(--size-small);">zakladatelé</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== 4 PILÍŘE ========== -->
+    <section id="pilire">
+      <div class="container">
+        <div class="section-header reveal">
+          <span class="label">Čtyři pilíře</span>
+          <h2>Cesta k celistvosti</h2>
+          <p>Každá naše aktivita rozvíjí minimálně jeden z těchto pilířů. Společně tvoří kompletní systém osobní transformace.</p>
+        </div>
+
+        <div class="grid-4 reveal-stagger">
+          <!-- Pilíř 1: Tělo -->
+          <div class="pillar-card reveal">
+            <div class="pillar-icon">◎</div>
+            <h3>Tělo</h3>
+            <p>Bio robot — fyzická schránka, její údržba, signály a odolnost.</p>
+            <div class="pillar-topics">
+              <span class="pillar-tag">Saunování</span>
+              <span class="pillar-tag">Dech</span>
+              <span class="pillar-tag">Spánek</span>
+              <span class="pillar-tag">Reset</span>
+            </div>
+          </div>
+
+          <!-- Pilíř 2: Emoce -->
+          <div class="pillar-card reveal">
+            <div class="pillar-icon">◐</div>
+            <h3>Emoce</h3>
+            <p>Pochopení emocí jako signalizačního systému a jejich vědomá integrace.</p>
+            <div class="pillar-topics">
+              <span class="pillar-tag">Vztahy</span>
+              <span class="pillar-tag">Trauma</span>
+              <span class="pillar-tag">Vzorce</span>
+              <span class="pillar-tag">Bezpečí</span>
+            </div>
+          </div>
+
+          <!-- Pilíř 3: Mysl -->
+          <div class="pillar-card reveal">
+            <div class="pillar-icon">◈</div>
+            <h3>Mysl</h3>
+            <p>Software bio robota — myšlenkové vzorce, přesvědčení a hodnoty.</p>
+            <div class="pillar-topics">
+              <span class="pillar-tag">KBT</span>
+              <span class="pillar-tag">NLP</span>
+              <span class="pillar-tag">Hodnoty</span>
+              <span class="pillar-tag">Hranice</span>
+            </div>
+          </div>
+
+          <!-- Pilíř 4: Životní energie -->
+          <div class="pillar-card reveal">
+            <div class="pillar-icon">◉</div>
+            <h3>Životní energie</h3>
+            <p>Palivo bio robota — odkud se bere, co ji žere a jak ji chránit.</p>
+            <div class="pillar-topics">
+              <span class="pillar-tag">Zdroje</span>
+              <span class="pillar-tag">Únava</span>
+              <span class="pillar-tag">Rituály</span>
+              <span class="pillar-tag">Dobíjení</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== SLUŽBY ========== -->
+    <section id="sluzby">
+      <div class="container">
+        <div class="section-header reveal">
+          <span class="label">Naše služby</span>
+          <h2>Co nabízíme</h2>
+          <p>Individuální i skupinové formy práce s progresivní cenou. Klient sám rozhodne, kolik zaplatí.</p>
+        </div>
+
+        <!-- Individuální -->
+        <div class="service-category">
+          <span class="label service-category-label reveal">Individuální formy</span>
+          <div class="grid-2 reveal-stagger">
+            <div class="service-card flagship reveal">
+              <h3>Transformační koučink</h3>
+              <p>Strukturovaná práce na konkrétním cíli. KBT + NLP + zpětná vazba. Akreditace MŠMT.</p>
+              <div class="service-meta">
+                <span>⏱ 60–90 min</span>
+                <span>👤 Individuální</span>
+              </div>
+              <div class="service-price">800–1 200 Kč</div>
+              <div class="service-note">progresivní — klient rozhoduje</div>
+            </div>
+
+            <div class="service-card reveal">
+              <h3>Harmonizace / Terapie</h3>
+              <p>Hluboká práce s emocemi, tělem a vzorci. Bezpečný prostor pro zpracování.</p>
+              <div class="service-meta">
+                <span>⏱ 60–90 min</span>
+                <span>👤 Individuální</span>
+              </div>
+              <div class="service-price">800–1 200 Kč</div>
+              <div class="service-note">progresivní — klient rozhoduje</div>
+            </div>
+
+            <div class="service-card reveal">
+              <h3>Reset hlavy a nervového systému</h3>
+              <p>Práce s tělem — tlak na konkrétní body, zklidnění nervového systému. Návrat do klidu.</p>
+              <div class="service-meta">
+                <span>⏱ 45–60 min</span>
+                <span>👩 Vede: Kristýna Nosová</span>
+              </div>
+              <div class="service-price">~1 500 Kč</div>
+              <div class="service-note">fixní cena</div>
+            </div>
+
+            <div class="service-card reveal">
+              <h3>Podpora v těžkých situacích</h3>
+              <p>Krizová podpora, emoční stabilizace, orientace v životní krizi.</p>
+              <div class="service-meta">
+                <span>⏱ 60 min</span>
+                <span>👤 Akutní potřeba</span>
+              </div>
+              <div class="service-price">800–1 200 Kč</div>
+              <div class="service-note">progresivní — klient rozhoduje</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Skupinové -->
+        <div class="service-category">
+          <span class="label service-category-label reveal">Skupinové formy</span>
+          <div class="grid-3 reveal-stagger">
+            <div class="service-card reveal">
+              <h3>Mužské kruhy</h3>
+              <p>Bezpečný prostor pro muže. Témata: role, odpovědnost, emoce, vztahy, síla.</p>
+              <div class="service-meta">
+                <span>⏱ 2–3 hod</span>
+                <span>👥 6–12 mužů</span>
+              </div>
+              <div class="service-price">300–500 Kč/os</div>
+            </div>
+
+            <div class="service-card reveal">
+              <h3>Ženské kruhy</h3>
+              <p>Bezpečný prostor pro ženy. Témata: sebeláska, hranice, mateřství, vnitřní síla.</p>
+              <div class="service-meta">
+                <span>⏱ 2–3 hod</span>
+                <span>👥 6–12 žen</span>
+              </div>
+              <div class="service-price">300–500 Kč/os</div>
+            </div>
+
+            <div class="service-card reveal">
+              <h3>Retreaty — Razová, Jeseníky</h3>
+              <p>Vícedenní pobytové akce na krásné chalupě. Kombinace všech technik v intenzivním formátu.</p>
+              <div class="service-meta">
+                <span>⏱ 2–4 dny</span>
+                <span>👥 10–20 osob</span>
+              </div>
+              <div class="service-price">5 190 Kč (vč. stravy a ubytování)</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== TÝM ========== -->
+    <section id="tym">
+      <div class="container">
+        <div class="section-header reveal">
+          <span class="label">Kdo za tím stojí</span>
+          <h2>Náš tým</h2>
+          <p>Lidé, kteří sami prošli osobní transformací a teď pomáhají druhým.</p>
+        </div>
+
+        <div class="team-grid reveal-stagger">
+          <!-- Jiří Synek -->
+          <div class="team-card reveal">
+            <div class="team-avatar">
+              <img src="images/jiri.jpg" alt="Mgr. Jiří Synek" loading="lazy">
+            </div>
+            <div class="team-name">Mgr. Jiří Synek</div>
+            <div class="team-role">Zakladatel & předseda · Transformační kouč</div>
+            <p class="team-bio">Důstojník Armády ČR. Andragog s červeným diplomem, státnice z psychologie. Certifikovaný transformační kouč (MŠMT). Prošel rekonstrukcí identity. Táta Emičky. IČO: 24400505</p>
+            <div class="team-tags">
+              <span class="team-tag">KBT</span>
+              <span class="team-tag">NLP</span>
+              <span class="team-tag">Koučink</span>
+              <span class="team-tag">Mindfulness</span>
+            </div>
+          </div>
+
+          <!-- Kristýna Nosová -->
+          <div class="team-card reveal">
+            <div class="team-avatar">
+              <img src="images/kristyna.jpg" alt="Mgr. Kristýna Nosová, DiS." loading="lazy">
+            </div>
+            <div class="team-name">Mgr. Kristýna Nosová, DiS.</div>
+            <div class="team-role">Spoluzakladatelka · Práce s tělem</div>
+            <p class="team-bio">Sociální pracovnice, IT projektová manažerka. Certifikovaná koučka (MŠMT). Osobní rozvoj je její poslání. Má kurz Reflexní masáž nohou. Máma Matyho.</p>
+            <div class="team-tags">
+              <span class="team-tag">Reset hlavy</span>
+              <span class="team-tag">Tělo</span>
+              <span class="team-tag">Harmonizace</span>
+              <span class="team-tag">Reflexní masáž nohou</span>
+            </div>
+          </div>
+
+          <!-- Robert Šamárek -->
+          <div class="team-card reveal">
+            <div class="team-avatar">
+              <img src="images/robert.jpg" alt="Ing. Robert Šamárek" loading="lazy">
+            </div>
+            <div class="team-name">Ing. Robert Šamárek</div>
+            <div class="team-role">Spoluzakladatel · Technologie & AI</div>
+            <p class="team-bio">Data Scientist, AI Enthusiast. VŠB – Technická univerzita Ostrava. Autor technologické vize, vizuálního systému a AI automatizace Motivusu.</p>
+            <div class="team-tags">
+              <span class="team-tag">Data Science</span>
+              <span class="team-tag">AI / ML</span>
+              <span class="team-tag">NLP</span>
+              <span class="team-tag">LLMs</span>
+            </div>
+          </div>
+
+          <!-- Michal Smolík -->
+          <div class="team-card reveal">
+            <div class="team-avatar">
+              <img src="images/michal_smolik.png" alt="Michal Smolík" loading="lazy">
+            </div>
+            <div class="team-name">Michal Smolík</div>
+            <div class="team-role">Spoluzakladatel · CDO & Design</div>
+            <p class="team-bio">Michal je duší designu Motivusu. Má bohaté zkušenosti s UX/UI pro prémiové značky a věří, že design by měl vyprávět příběh a vzbuzovat emoce. Zabezpečuje, aby "Chytré a lidské techno" bylo vidět v každém detailu.</p>
+            <div class="team-tags">
+              <span class="team-tag">Design</span>
+              <span class="team-tag">UX / UI</span>
+              <span class="team-tag">UX Strategy</span>
+              <span class="team-tag">Kreativa</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== POŠLI TO DÁL ========== -->
+    <section id="projekt" class="project-section">
+      <div class="container">
+        <div class="project-inner">
+          <div class="project-text reveal">
+            <span class="label">Komunitní projekt</span>
+            <h2>Pošli to dál</h2>
+            <p>Komunitní projekt zaměřený na budování bezpečného prostoru pro lidi v Moravskoslezském kraji. Věříme, že každý člověk má právo na podporu, pochopení a doprovázení na cestě k lepšímu vztahu se sebou samým.</p>
+            <p>Projekt vytváří systém vzájemné podpory — od mužských a ženských kruhů přes workshopy až po retreaty v krásném prostředí Jeseníků.</p>
+            <a href="#kontakt" class="btn" style="margin-top: var(--space-md);">Zapojte se</a>
+          </div>
+          <div class="project-visual reveal">
+            <img src="images/motivus_par_01.png" alt="Motivus komunita" loading="lazy">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== KONTAKT ========== -->
+    <section id="kontakt">
+      <div class="container-narrow text-center">
+        <div class="section-header reveal">
+          <span class="label">Spojte se s námi</span>
+          <h2>Začněte svou cestu</h2>
+          <p>Napište nám a my vám odpovíme. Žádný závazek, žádný tlak.</p>
+        </div>
+
+        <form id="main-contact-form" class="contact-form reveal" action="#" method="POST">
+          <div class="form-group">
+            <label for="name">Jméno</label>
+            <input type="text" id="name" name="name" required placeholder="Vaše jméno">
+          </div>
+          <div class="form-group">
+            <label for="email">E-mail</label>
+            <input type="email" id="email" name="email" required placeholder="vas@email.cz">
+          </div>
+          <div class="form-group">
+            <label for="message">Zpráva</label>
+            <textarea id="message" name="message" placeholder="Co za vás teď řešíte? Nemusíte se bát, toto zůstane jen mezi námi."></textarea>
+          </div>
+          <button type="submit" class="btn btn-filled" style="width: 100%; justify-content: center;">Odeslat zprávu</button>
+        </form>
+
+        <div class="reveal" style="margin-top: var(--space-lg);">
+          <p class="muted" style="margin-bottom: var(--space-md);">
+            <strong>Kancelář a terapeutický prostor:</strong><br>
+            Krnovská, Opava (možnost parkování)
+          </p>
+          <p class="muted" style="font-size: var(--size-small);">Nebo nás najdete na:</p>
+          <div style="display: flex; justify-content: center; gap: var(--space-md); margin-top: var(--space-sm);">
+            <a href="https://instagram.com/motivus.cz" class="link" target="_blank" rel="noopener">Instagram</a>
+            <a href="https://facebook.com/motivus.cz" class="link" target="_blank" rel="noopener">Facebook</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container-narrow">
+      <div class="footer-motto">„Sublevere Homines"</div>
+      <p class="footer-copy">© 2026 MOTIVUS — sdružení OSVČ se společným posláním. Všechna práva vyhrazena.</p>
+      <div class="footer-links">
+        <a href="https://github.com/GeorgeProjekt/Motivus" target="_blank" rel="noopener">GitHub</a>
+        <a href="https://instagram.com/motivus.cz" target="_blank" rel="noopener">Instagram</a>
+        <a href="mailto:info@motivus.cz">info@motivus.cz</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="js/canvas-bg.js"></script>
+  <script src="js/theme.js"></script>
+  <script src="js/scroll-reveal.js"></script>
+  <script src="js/nav.js"></script>
+  <script src="js/contact.js"></script>
+
+</body>
+</html>

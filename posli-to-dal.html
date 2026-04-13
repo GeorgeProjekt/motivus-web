@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/png" href="public/Motivus_logo.png" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Klub Pošli to dál – komunitní projekt sdružení MOTIVUS. Jak to funguje, co členové získají a jak se přidat." />
+  <title>Pošli to dál | MOTIVUS</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  
+  <style>
+    /* ==========================================
+       PREMIUM DESIGN TOKENS 
+       ========================================== */
+    :root {
+      --color-bg-base: #100f0e;
+      --color-brown-glow: rgba(139, 115, 85, 0.15);
+      --color-green-glow: rgba(58, 74, 56, 0.15);
+      
+      --color-glass-bg: rgba(20, 19, 18, 0.6);
+      --color-glass-border: rgba(196, 167, 125, 0.12);
+      
+      --color-text: #F2EFE9;
+      --color-text-muted: #A8A29A;
+      
+      --color-accent: #C4A77D; 
+      
+      --font-heading: 'Cormorant Garamond', 'Times New Roman', serif;
+      --font-body: 'Inter', system-ui, -apple-system, sans-serif;
+
+      --size-h1: clamp(2.5rem, 6vw, 4.5rem);
+      --size-h2: clamp(1.8rem, 4vw, 2.5rem);
+      --size-body: clamp(1.05rem, 1.2vw, 1.2rem);
+
+      --ease-fluid: cubic-bezier(0.16, 1, 0.3, 1);
+      --duration-btn: 300ms;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font-body); font-size: var(--size-body);
+      font-weight: 300; line-height: 1.8; color: var(--color-text);
+      background-color: var(--color-bg-base);
+      -webkit-font-smoothing: antialiased; overflow-x: hidden;
+    }
+
+    /* Ambient Glows & Noise */
+    .ambient-glow {
+      position: fixed; width: 60vw; height: 60vw; max-width: 800px; max-height: 800px;
+      border-radius: 50%; filter: blur(120px); z-index: -1; opacity: 0.6; pointer-events: none;
+    }
+    .ambient-glow.top { top: -20%; left: -10%; background: var(--color-brown-glow); }
+    .ambient-glow.bottom { bottom: -20%; right: -10%; background: var(--color-green-glow); }
+
+    body::after {
+      content: ''; position: fixed; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.2' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.02'/%3E%3C/svg%3E");
+      pointer-events: none; z-index: 999;
+    }
+
+    h1, h2, h3 { font-family: var(--font-heading); font-weight: 300; line-height: 1.1; letter-spacing: -0.01em; }
+    a { color: inherit; text-decoration: none; }
+    
+    .container { max-width: 840px; margin: 0 auto; padding: 0 2rem; position: relative; z-index: 10; }
+
+    /* Buttons */
+    .btn {
+      position: relative; display: inline-flex; align-items: center; justify-content: center; gap: 0.75rem;
+      padding: 1rem 2.2rem; border-radius: 100px;
+      font-family: var(--font-body); font-weight: 400; font-size: 0.9rem; letter-spacing: 0.05em; text-transform: uppercase;
+      cursor: pointer; overflow: hidden; transition: all var(--duration-btn) var(--ease-fluid);
+      border: 1px solid rgba(196, 167, 125, 0.35); color: var(--color-accent); background: transparent; backdrop-filter: blur(10px);
+    }
+    .btn::before {
+      content: ''; position: absolute; inset: 0; background: var(--color-accent);
+      transform: scaleX(0); transform-origin: left; transition: transform var(--duration-btn) var(--ease-fluid); z-index: -1;
+    }
+    .btn:hover { color: var(--color-bg-base); border-color: var(--color-accent); }
+    .btn:hover::before { transform: scaleX(1); }
+    
+    .btn-filled { background: var(--color-accent); color: var(--color-bg-base); border: none; }
+    .btn-filled::before { background: #fff; opacity: 0.15; }
+
+    /* Navbar minimal */
+    .navbar {
+      padding: 2rem 0; display: flex; align-items: center; justify-content: space-between;
+    }
+    .back-link {
+      display: inline-flex; align-items: center; gap: 0.75rem;
+      font-size: 0.85rem; letter-spacing: 0.05em; text-transform: uppercase; color: var(--color-text-muted);
+      transition: color 0.3s;
+    }
+    .back-link:hover { color: var(--color-accent); }
+
+    /* Header */
+    .page-header { margin-top: 4rem; margin-bottom: 5rem; text-align: center; }
+    .page-header h1 { font-size: var(--size-h1); margin-bottom: 1rem; }
+    .page-header .motto { font-size: 1.4rem; color: var(--color-accent); font-style: italic; opacity: 0.9; }
+
+    /* Sections */
+    .content-section { margin-bottom: 6rem; }
+    .content-section h2 { font-size: var(--size-h2); margin-bottom: 1.5rem; color: var(--color-accent); }
+    .content-section p { margin-bottom: 1.5rem; color: var(--color-text-muted); }
+    
+    ul.check-list { list-style: none; margin: 2rem 0; }
+    ul.check-list li {
+      position: relative; padding-left: 2rem; margin-bottom: 1rem; color: var(--color-text-muted);
+    }
+    ul.check-list li::before {
+      content: '✦'; position: absolute; left: 0; top: 0; color: var(--color-accent); font-size: 0.8rem; line-height: 1.8;
+    }
+
+    /* Glass card */
+    .glass-box {
+      background: var(--color-glass-bg); backdrop-filter: blur(24px); border: 1px solid var(--color-glass-border);
+      border-radius: 20px; padding: 4rem; margin: 4rem 0;
+      box-shadow: 0 30px 60px rgba(0,0,0,0.3);
+    }
+
+    .cta-area { text-align: center; padding: 6rem 0; border-top: 1px solid var(--color-glass-border); margin-top: 4rem; }
+    .cta-area h2 { margin-bottom: 2rem; }
+
+    .fade-up { opacity: 0; transform: translateY(30px); animation: fadeUpAnim 1s var(--ease-fluid) forwards; }
+    @keyframes fadeUpAnim { to { opacity: 1; transform: translateY(0); } }
+    
+    @media (max-width: 768px) {
+      .glass-box { padding: 2.5rem 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="ambient-glow top"></div>
+  <div class="ambient-glow bottom"></div>
+
+  <div class="container">
+    <nav class="navbar fade-up">
+      <a href="index.html" class="back-link">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="m15 18-6-6 6-6"/></svg>Zpět na domovskou stránku
+      </a>
+    </nav>
+
+    <div class="page-header fade-up" style="animation-delay: 100ms;">
+      <h1>Klub „Pošli to dál"</h1>
+      <p class="motto">„Dostal jsi hodnotu? Pošli to dál."</p>
+    </div>
+
+    <div class="content-section fade-up" style="animation-delay: 200ms;">
+      <h2>Zrod skutečné komunity</h2>
+      <p>Klub „Pošli to dál" je ústředním strukturálním prvkem sdružení MOTIVUS. Vznikl z jasného záměru zajistit organickou návaznost a šíření osobního rozvoje mezi lidmi – bez tlaku, na bázi dobrovolnosti a prožité zkušenosti.</p>
+      <p>Nejde o masovou záležitost. Jedná se o propojený ekosystém lidí, kteří chtějí překročit rámec individuální práce na sobě a vstoupit do sdíleného formátu. Komunita žije prostřednictvím drobných příspěvků, které napřímo financují další růst a možnosti sdružení.</p>
+    </div>
+
+    <div class="glass-box fade-up" style="animation-delay: 300ms;">
+      <h2 style="color: var(--color-text); margin-bottom: 2rem; font-size: 2rem;">Architektura členství</h2>
+      <ul class="check-list">
+        <li><strong>Fokusovaný růst:</strong> Primárně se nyní soustředíme na budování silného jádra v Moravskoslezském kraji.</li>
+        <li><strong>Spolutvorba:</strong> Členové nejsou jen pasivní konzumenti služeb; jejich příspěvek formuje budoucí podobu retreatů a komunitních eventů.</li>
+        <li><strong>Výhody pro členy:</strong> Exkluzivní přístup do mužských/ženských kruhů, zvýhodněné podmínky pro transformační koučink, přednostní rezervace na retreat akce.</li>
+      </ul>
+    </div>
+
+    <div class="content-section fade-up" style="animation-delay: 400ms;">
+      <h2>Mechanismy podpory</h2>
+      <p>Myšlenka je vysoce přímočará: Pokud vám osobní proces, koučink nebo retreat s MOTIVUS pomohl, nabízíme prostor "poslat tuto hodnotu dál". Váš drobný pravidelný příspěvek otevírá dveře pro tvorbu stabilního zázemí organizace. Vytrháváme tak rozvojové organizace ze závislosti na krátkodobých grantech a dáváme jim pevnou půdu pod nohama do dalších let.</p>
+    </div>
+
+    <div class="cta-area fade-up" style="animation-delay: 500ms;">
+      <h2>Cítíte s námi soulad?</h2>
+      <p style="color: var(--color-text-muted); margin-bottom: 3rem;">Komunita se rozrůstá. Přidejte se a zažijte na vlastní kůži sílu sdíleného bezpečného prostoru.</p>
+      <div style="display: flex; gap: 1.5rem; justify-content: center; flex-wrap: wrap;">
+        <a href="https://instagram.com/motivus.cz" class="btn btn-filled">Navštívit nás na Instagramu</a>
+        <a href="index.html" class="btn">Prozkoumat 4 pilíře</a>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>
