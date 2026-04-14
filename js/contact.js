@@ -15,17 +15,21 @@ document.addEventListener('DOMContentLoaded', () => {
     if (existingMsg) existingMsg.remove();
 
     const data = {
+      access_key: "8527d713-f331-42ac-93f6-a22905d1380c",
+      subject: "Nová zpráva z webu motivus.cz",
+      from_name: "Motivus Form",
       name: form.name.value,
       email: form.email.value,
       message: form.message.value
     };
 
     try {
-      // Odeslání na náš nový vlastní VPS endpoint
-      const response = await fetch('https://podpis.motivus.cz/contact.php', {
+      // Odeslání přes službu Web3Forms přímo z prohlížeče
+      const response = await fetch('https://api.web3forms.com/submit', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
         },
         body: JSON.stringify(data)
       });
@@ -40,11 +44,11 @@ document.addEventListener('DOMContentLoaded', () => {
       msgDiv.style.textAlign = 'center';
       msgDiv.style.transition = 'opacity 0.5s ease';
       
-      if (response.ok && result.status === 'success') {
+      if (response.ok && result.success) {
         msgDiv.style.backgroundColor = 'rgba(46, 204, 113, 0.1)';
         msgDiv.style.color = '#2ecc71';
         msgDiv.style.border = '1px solid rgba(46, 204, 113, 0.3)';
-        msgDiv.textContent = result.message || 'Zpráva byla úspěšně odeslána!';
+        msgDiv.textContent = 'Zpráva byla úspěšně odeslána. Brzy se vám ozveme!';
         form.reset(); // Vyprázdnění formuláře
       } else {
         throw new Error(result.message || 'Neznámá chyba při komunikaci se serverem.');
