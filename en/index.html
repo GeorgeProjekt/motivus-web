@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MOTIVUS — Sublevere Homines</title>
+  <meta name="description" content="A safe space to pause, orient yourself, and strengthen your relationships. Transformational coaching, body work, men's and women's circles, retreats.">
+  <meta property="og:title" content="MOTIVUS — Sublevere Homines">
+  <meta property="og:description" content="Elevating people. Transformational coaching, harmonization, and community work. An association of professionals with a shared mission.">
+  <meta property="og:type" content="website">
+  <meta name="theme-color" content="#8B7355">
+  <link rel="alternate" hreflang="cs" href="https://motivus.cz/" />
+  <link rel="alternate" hreflang="en" href="https://motivus.cz/en/" />
+  <link rel="alternate" hreflang="x-default" href="https://motivus.cz/" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="../css/reset.css">
+  <link rel="stylesheet" href="../css/tokens.css">
+  <link rel="stylesheet" href="../css/base.css">
+  <link rel="stylesheet" href="../css/layout.css">
+  <link rel="stylesheet" href="../css/components.css">
+  <link rel="stylesheet" href="../css/animations.css">
+</head>
+<body>
+
+  <!-- Canvas Background -->
+  <div class="canvas-container" aria-hidden="true">
+    <canvas id="canvas-layer-1"></canvas>
+    <canvas id="canvas-layer-2"></canvas>
+  </div>
+
+  <!-- Navigation -->
+  <nav class="nav" id="nav" role="navigation" aria-label="Main Navigation">
+    <a href="#hero" class="nav-logo">
+      <img src="../images/logo.jpeg" alt="Motivus logo" width="36" height="36">
+      <span>MOTIVUS</span>
+    </a>
+
+    <div class="nav-links" id="nav-links">
+      <a href="#mise">Mission</a>
+      <a href="#pilire">4 Pillars</a>
+      <a href="#sluzby">Services</a>
+      <a href="#tym">Team</a>
+      <a href="#projekt">Pay It Forward</a>
+      <a href="#kontakt">Contact</a>
+    </div>
+
+    <div class="nav-controls">
+      <a href="../index.html" class="lang-toggle" aria-label="Switch to Czech" title="Čeština">CZ</a>
+      <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">
+        <span class="theme-icon">☽</span>
+      </button>
+      <button class="nav-hamburger" id="nav-hamburger" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <main>
+
+    <!-- ========== HERO ========== -->
+    <section class="hero" id="hero">
+      <div class="hero-inner">
+        <div class="hero-logo-wrapper">
+          <img src="../images/logo.jpeg" alt="Motivus logo" class="hero-logo-large">
+        </div>
+        <p class="hero-label label">Motivus — Professional Association</p>
+        <h1 class="hero-motto">Sublevere Homines</h1>
+        <p class="hero-subtitle">Elevating people. A safe space to pause, orient yourself, and strengthen your relationship with yourself, your partner, your children, and life itself.</p>
+        <a href="#sluzby" class="btn">Discover Our Services</a>
+      </div>
+      <div class="hero-scroll-hint">
+        <span>scroll</span>
+        <div class="scroll-line"></div>
+      </div>
+    </section>
+
+    <!-- ========== MISE ========== -->
+    <section id="mise">
+      <div class="container-narrow text-center">
+        <div class="section-header reveal">
+          <span class="label">Our Mission</span>
+          <h2>A compass that doesn't scream.<br>A compass that whispers.</h2>
+          <div class="divider"></div>
+        </div>
+        <p class="reveal" style="font-size: var(--size-h3); font-family: var(--font-heading); font-weight: var(--weight-light); color: var(--color-text-muted); line-height: var(--lh-normal);">
+          MOTIVUS is a space to support a person's holistic harmony through emotional work, community building, and care for mental and relational health. We don't manipulate, we don't rush, we deeply respect the uniqueness of every visitor.
+        </p>
+        <div class="reveal" style="margin-top: var(--space-lg); display: flex; justify-content: center; gap: var(--space-lg); flex-wrap: wrap;">
+          <div>
+            <div style="font-family: var(--font-heading); font-size: var(--size-h1); color: var(--color-accent);">10</div>
+            <div class="muted" style="font-size: var(--size-small);">proven techniques</div>
+          </div>
+          <div>
+            <div style="font-family: var(--font-heading); font-size: var(--size-h1); color: var(--color-accent);">4</div>
+            <div class="muted" style="font-size: var(--size-small);">pillars of harmony</div>
+          </div>
+          <div>
+            <div style="font-family: var(--font-heading); font-size: var(--size-h1); color: var(--color-accent);">4</div>
+            <div class="muted" style="font-size: var(--size-small);">founders with unique skills</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== 4 PILÍŘE ========== -->
+    <section id="pilire">
+      <div class="container">
+        <div class="section-header reveal">
+          <span class="label">Four Pillars</span>
+          <h2>The Journey to Wholeness</h2>
+          <p>Every activity we do develops at least one of these pillars. Together, they form a complete system of personal transformation.</p>
+        </div>
+
+        <div class="grid-4 reveal-stagger">
+          <div class="pillar-card reveal">
+            <div class="pillar-icon">◎</div>
+            <h3>Body</h3>
+            <p>The Bio-robot — the physical container, its maintenance, signals, and resilience.</p>
+            <div class="pillar-topics">
+              <span class="pillar-tag">Sauna</span>
+              <span class="pillar-tag">Breath</span>
+              <span class="pillar-tag">Sleep</span>
+              <span class="pillar-tag">Reset</span>
+            </div>
+          </div>
+
+          <div class="pillar-card reveal">
+            <div class="pillar-icon">◐</div>
+            <h3>Emotions</h3>
+            <p>Understanding emotions as a signaling system and integrating them consciously.</p>
+            <div class="pillar-topics">
+              <span class="pillar-tag">Relationships</span>
+              <span class="pillar-tag">Trauma</span>
+              <span class="pillar-tag">Patterns</span>
+              <span class="pillar-tag">Safety</span>
+            </div>
+          </div>
+
+          <div class="pillar-card reveal">
+            <div class="pillar-icon">◈</div>
+            <h3>Mind</h3>
+            <p>The software — thought patterns, limiting beliefs, boundaries and core values.</p>
+            <div class="pillar-topics">
+              <span class="pillar-tag">Thoughts</span>
+              <span class="pillar-tag">Attitudes</span>
+              <span class="pillar-tag">Values</span>
+              <span class="pillar-tag">Boundaries</span>
+            </div>
+          </div>
+
+          <div class="pillar-card reveal">
+            <div class="pillar-icon">◉</div>
+            <h3>Life Energy</h3>
+            <p>The fuel — where it comes from, what drains it, and how to protect it.</p>
+            <div class="pillar-topics">
+              <span class="pillar-tag">Sources</span>
+              <span class="pillar-tag">Fatigue</span>
+              <span class="pillar-tag">Rituals</span>
+              <span class="pillar-tag">Recharging</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== SLUŽBY ========== -->
+    <section id="sluzby">
+      <div class="container">
+        <div class="section-header reveal">
+          <span class="label">Our Services</span>
+          <h2>What we offer</h2>
+          <p>Individual and group formats with a progressive pricing model. The client decides how much they will pay.</p>
+        </div>
+
+        <div class="service-category">
+          <span class="label service-category-label reveal">Individual Formats</span>
+          <div class="grid-2 reveal-stagger">
+            <div class="service-card flagship reveal">
+              <h3>Transformational Coaching</h3>
+              <p>Structured work on a specific goal. CBT + NLP + feedback. MEYS Accredited.</p>
+              <div class="service-meta">
+                <span>⏱ 60–90 min</span>
+                <span>👤 Individual</span>
+              </div>
+              <div class="service-price">€35–50</div>
+              <div class="service-note">progressive pricing</div>
+            </div>
+
+            <div class="service-card reveal">
+              <h3>Harmonization / Therapy</h3>
+              <p>Deep work with emotions, your body, and behavioral patterns. A safe space for processing.</p>
+              <div class="service-meta">
+                <span>⏱ 60–90 min</span>
+                <span>👤 Individual</span>
+              </div>
+              <div class="service-price">€35–50</div>
+              <div class="service-note">progressive pricing</div>
+            </div>
+
+            <div class="service-card reveal">
+              <h3>Head & Nervous System Reset</h3>
+              <p>Bodywork — targeting acupressure points, calming the nervous system. A return to center.</p>
+              <div class="service-meta">
+                <span>⏱ 90 min</span>
+                <span>👩 Led by: Kristýna Nosová</span>
+              </div>
+              <div class="service-price">€60</div>
+              <div class="service-note">fixed price</div>
+            </div>
+
+            <div class="service-card reveal">
+              <h3>Heavy Situation Support</h3>
+              <p>Crisis support, emotional stabilization, navigation through difficult life crises.</p>
+              <div class="service-meta">
+                <span>⏱ 60 min</span>
+                <span>👤 Acute Needs</span>
+              </div>
+              <div class="service-price">€35–50</div>
+              <div class="service-note">progressive pricing</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="service-category">
+          <span class="label service-category-label reveal">Group Formats</span>
+          <div class="grid-3 reveal-stagger">
+            <div class="service-card reveal">
+              <h3>Men's Circles</h3>
+              <p>A safe space for men. Topics include resilience, responsibility, relationships, and strength.</p>
+              <div class="service-meta">
+                <span>⏱ 2–3 hrs</span>
+                <span>👥 6–12 men</span>
+                <span style="flex-basis: 100%;">👨 Led by: Michal Smolík</span>
+              </div>
+              <div class="service-price">€15–20 / person</div>
+            </div>
+
+            <div class="service-card reveal">
+              <h3>Women's Circles</h3>
+              <p>A safe space for women. Topics include self-love, boundaries, motherhood, and inner strength.</p>
+              <div class="service-meta">
+                <span>⏱ 2–3 hrs</span>
+                <span>👥 6–12 women</span>
+                <span style="flex-basis: 100%;">👩 Led by: Kristýna Nosová</span>
+              </div>
+              <div class="service-price">€15–20 / person</div>
+            </div>
+
+            <div class="service-card reveal">
+              <h3>Immersions — Sonnenhouse</h3>
+              <p>Multi-day retreats at a beautiful cabin. A combination of all techniques in an intensive format.</p>
+              <div class="service-meta">
+                <span>⏱ 2–4 days</span>
+                <span>👥 Max 10 persons</span>
+                <span style="flex-basis: 100%;">👩 Led by: Kristýna Nosová</span>
+              </div>
+              <div class="service-price">€210 (inc. accommodation & food)</div>
+            </div>
+
+            <div class="service-card reveal">
+              <h3>Keynote Lectures & Workshops</h3>
+              <p>Topics: emotions, stress management, effective communication, body awareness, conflict resolution.</p>
+              <div class="service-meta">
+                <span style="flex-basis: 100%;">👨 Led by: Jiří Synek</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== TÝM ========== -->
+    <section id="tym">
+      <div class="container">
+        <div class="section-header reveal">
+          <span class="label">Who is behind it</span>
+          <h2>Our Team</h2>
+          <p>People who underwent their own personal transformation and are now helping others.</p>
+        </div>
+
+        <div class="team-grid reveal-stagger">
+          <div class="team-card reveal">
+            <div class="team-avatar">
+              <img src="../images/Jiri.PNG" alt="Mgr. Jiří Synek" loading="lazy">
+            </div>
+            <div class="team-name">Mgr. Jiří Synek</div>
+            <div class="team-role">Founder & Chairman · Transformational Coach</div>
+            <p class="team-bio">Master's in Andragogy, state exam in psychology. Served in 6 foreign operations as a commissioned officer and has over 17 years of experience managing people in demanding environments. Certified coach of psycho-energetic transformation under MEYS. Lived in Lithuania for three years, gaining an international perspective on relationship dynamics.</p>
+            <div class="team-tags">
+              <span class="team-tag">CBT</span>
+              <span class="team-tag">NLP</span>
+              <span class="team-tag">Coaching</span>
+              <span class="team-tag">Mindfulness</span>
+            </div>
+            <div class="team-socials">
+              <a href="#" target="_blank" rel="noopener">LinkedIn</a>
+              <a href="#" target="_blank" rel="noopener">Instagram</a>
+            </div>
+          </div>
+
+          <div class="team-card reveal">
+            <div class="team-avatar">
+              <img src="../images/Kristyna.PNG" alt="Mgr. Kristýna Nosová" loading="lazy">
+            </div>
+            <div class="team-name">Mgr. Kristýna Nosová</div>
+            <div class="team-role">Co-Founder · Bodywork & Coaching</div>
+            <p class="team-bio">Master's in Social Work with over 8 years in the social and healthcare sectors. Certified in basal stimulation and reflexology. As a certified psycho-energetic transformational coach, she seamlessly connects the body with the mind. Her work emphasizes a highly individual and empathetic approach to every client's needs.</p>
+            <div class="team-tags">
+              <span class="team-tag">Head Reset</span>
+              <span class="team-tag">Body</span>
+              <span class="team-tag">Harmonization</span>
+              <span class="team-tag">Reflexology</span>
+            </div>
+            <div class="team-socials">
+              <a href="#" target="_blank" rel="noopener">LinkedIn</a>
+              <a href="#" target="_blank" rel="noopener">Instagram</a>
+            </div>
+          </div>
+
+          <div class="team-card reveal">
+            <div class="team-avatar">
+              <img src="../images/Robert.PNG" alt="Ing. Robert Šamárek" loading="lazy">
+            </div>
+            <div class="team-name">Ing. Robert Šamárek</div>
+            <div class="team-role">Co-Founder · Tech & AI</div>
+            <p class="team-bio">Data Scientist and AI Enthusiast. Graduate of VŠB (Technical University Ostrava). The architect behind Motivus's technological vision, visual design system, data privacy architecture, and AI automation engines.</p>
+            <div class="team-tags">
+              <span class="team-tag">Data Science</span>
+              <span class="team-tag">AI / ML</span>
+              <span class="team-tag">Technology</span>
+              <span class="team-tag">LLMs</span>
+            </div>
+            <div class="team-socials">
+              <a href="#" target="_blank" rel="noopener">LinkedIn</a>
+              <a href="#" target="_blank" rel="noopener">Instagram</a>
+            </div>
+          </div>
+
+          <div class="team-card reveal">
+            <div class="team-avatar">
+              <img src="../images/Michal.PNG" alt="Michal Smolík" loading="lazy">
+            </div>
+            <div class="team-name">Michal Smolík</div>
+            <div class="team-role">Co-Founder · Men's Circles</div>
+            <p class="team-bio">A military professional of 17 years, Michal has spent his entire career working closely with people. For the past 7 years, he has designed and led training courses both domestically and internationally. His experience from 4 foreign deployments gave him an unshakable foundation in communication, trust-building, and interpersonal dynamics.</p>
+            <div class="team-tags">
+              <span class="team-tag">Men's Circles</span>
+              <span class="team-tag">Community</span>
+              <span class="team-tag">Communication</span>
+              <span class="team-tag">Development</span>
+            </div>
+            <div class="team-socials">
+              <a href="#" target="_blank" rel="noopener">LinkedIn</a>
+              <a href="#" target="_blank" rel="noopener">Instagram</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== POŠLI TO DÁL ========== -->
+    <section id="projekt" class="project-section">
+      <div class="container">
+        <div class="project-inner">
+          <div class="project-text reveal">
+            <span class="label">Community Project</span>
+            <h2>Pay It Forward</h2>
+            <p>A community project aimed at building a safe space for people locally. We believe everyone deserves support, understanding, and a competent guide on their journey toward a healthier relationship with themselves.</p>
+            <p>The project forms an ecosystem of mutual support — from men's and women's circles to workshops, down to transformative immersion retreats in nature.</p>
+            <a href="pay-it-forward.html" class="btn btn-filled" style="margin-top: var(--space-md); margin-right: 10px;">Read More</a>
+            <a href="#kontakt" class="btn" style="margin-top: var(--space-md);">Join Us</a>
+          </div>
+          <div class="project-visual reveal">
+            <img src="../images/motivus_par_01.png" alt="Motivus community" loading="lazy">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== KONTAKT ========== -->
+    <section id="kontakt">
+      <div class="container-narrow text-center">
+        <div class="section-header reveal">
+          <span class="label">Get in Touch</span>
+          <h2>Start Your Journey</h2>
+          <p>Send us a message and we'll reply. No obligation, no pressure.</p>
+        </div>
+
+        <form id="main-contact-form" class="contact-form reveal" action="#" method="POST">
+          <div class="form-group">
+            <label for="name">Name</label>
+            <input type="text" id="name" name="name" required placeholder="Your name">
+          </div>
+          <div class="form-group">
+            <label for="email">E-mail</label>
+            <input type="email" id="email" name="email" required placeholder="your.email@example.com">
+          </div>
+          <div class="form-group">
+            <label for="message">Message</label>
+            <textarea id="message" name="message" placeholder="What are you currently experiencing? Don't worry, this stays strictly between us."></textarea>
+          </div>
+          <button type="submit" class="btn btn-filled" style="width: 100%; justify-content: center;">Send Message</button>
+        </form>
+
+        <div class="reveal" style="margin-top: var(--space-lg);">
+          <p class="muted" style="margin-bottom: var(--space-md);">
+            <strong>Office and Therapy Space:</strong><br>
+            Krnovská 7, Opava, CZ (parking available)
+          </p>
+          <p class="muted" style="font-size: var(--size-small);">Or find us on:</p>
+          <div style="display: flex; justify-content: center; gap: var(--space-md); margin-top: var(--space-sm);">
+            <a href="https://instagram.com/motivus.cz" class="link" target="_blank" rel="noopener">Instagram</a>
+            <a href="https://facebook.com/motivus.cz" class="link" target="_blank" rel="noopener">Facebook</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container-narrow">
+      <div class="footer-motto">"Sublevere Homines"</div>
+      <p class="footer-copy">© 2026 MOTIVUS — Professional association with a shared mission. All rights reserved.</p>
+      <div class="footer-links">
+        <a href="https://instagram.com/motivus.cz" target="_blank" rel="noopener">Instagram</a>
+        <a href="mailto:info@motivus.cz">info@motivus.cz</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="../js/canvas-bg.js"></script>
+  <script src="../js/theme.js"></script>
+  <script src="../js/scroll-reveal.js"></script>
+  <script src="../js/nav.js"></script>
+  <script src="../js/contact.js?v=2"></script>
+
+</body>
+</html>
