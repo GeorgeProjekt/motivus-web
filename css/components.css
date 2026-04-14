@@ -310,6 +310,24 @@
   border: 1px solid var(--color-border);
   color: var(--color-text-muted);
 }
+.team-socials {
+  margin-top: var(--space-md);
+  display: flex;
+  justify-content: center;
+  gap: var(--space-md);
+}
+.team-socials a {
+  font-size: var(--size-small);
+  color: var(--color-accent);
+  text-decoration: none;
+  font-weight: var(--weight-medium);
+  letter-spacing: var(--ls-wide);
+  text-transform: uppercase;
+  transition: opacity var(--duration-fast);
+}
+.team-socials a:hover {
+  opacity: 0.7;
+}
 
 /* ===== PROJECT CTA ===== */
 .project-section {
