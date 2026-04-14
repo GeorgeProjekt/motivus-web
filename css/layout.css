@@ -71,7 +71,8 @@ main {
 }
 .nav-logo img {
   height: 36px;
-  width: auto;
+  width: 36px;
+  object-fit: cover;
   border-radius: var(--radius-round);
 }
 .nav-logo span {

@@ -11,6 +11,19 @@
   max-width: 900px;
   padding: var(--space-lg) var(--space-md);
 }
+.hero-logo-wrapper {
+  margin-bottom: var(--space-md);
+  opacity: 0;
+  animation: fadeInUp 1.2s var(--ease-out-expo) 0.1s forwards;
+}
+.hero-logo-large {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 1px solid var(--color-border);
+  box-shadow: 0 0 30px rgba(139, 115, 85, 0.15);
+}
 .hero-motto {
   font-family: var(--font-heading);
   font-size: var(--size-display);
