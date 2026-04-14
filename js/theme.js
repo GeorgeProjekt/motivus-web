@@ -8,12 +8,12 @@ class ThemeManager {
   }
 
   init() {
-    // Check saved preference or system preference
+    // Set dark theme as the absolute default across all devices
     const saved = localStorage.getItem('motivus-theme');
-    if (saved === 'dark' || (!saved && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-      this.setDark();
-    } else {
+    if (saved === 'light') {
       this.setLight();
+    } else {
+      this.setDark();
     }
 
     // Listen for toggle
