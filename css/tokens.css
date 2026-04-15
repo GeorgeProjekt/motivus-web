@@ -60,9 +60,13 @@
   /* Borders */
   --radius-sm: 4px;
   --radius-md: 8px;
-  --radius-lg: 16px;
-  --radius-xl: 24px;
+  --radius-lg: 12px; /* Sharper editorial corners */
+  --radius-xl: 20px;
   --radius-round: 50%;
+
+  /* Prices */
+  --size-price: clamp(1.1rem, 2.5vw, 1.45rem);
+  --ls-price: 0.05em;
 
   /* Shadows */
   --shadow-soft: 0 2px 20px rgba(45, 42, 38, 0.05);
