@@ -100,4 +100,9 @@
   --shadow-soft: 0 2px 20px rgba(0, 0, 0, 0.15);
   --shadow-card: 0 4px 30px rgba(0, 0, 0, 0.2);
   --shadow-elevated: 0 8px 40px rgba(0, 0, 0, 0.3);
+
+  /* Glassmorphism Extra */
+  --glass-bg: rgba(34, 33, 32, 0.4);
+  --glass-border: rgba(196, 167, 125, 0.1);
+  --glass-reflection: linear-gradient(135deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0) 50%, rgba(255,255,255,0.02) 100%);
 }
