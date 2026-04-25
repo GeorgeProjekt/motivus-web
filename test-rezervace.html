@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Interní Test Rezervací — Motivus</title>
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  
+  <!-- Styles -->
+  <link rel="stylesheet" href="css/reset.css">
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/components.css">
+  
+  <style>
+    .sandbox-container {
+      max-width: 800px;
+      margin: 100px auto;
+      padding: 40px;
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: 8px;
+      text-align: center;
+    }
+    .sandbox-container h1 {
+      font-family: var(--font-heading);
+      font-size: var(--size-h2);
+      color: var(--color-accent);
+      margin-bottom: 20px;
+    }
+    .sandbox-container p {
+      margin-bottom: 40px;
+      color: var(--color-text-muted);
+    }
+    /* Placeholder widget box before Cal.com is added */
+    .cal-placeholder {
+      width: 100%;
+      height: 600px;
+      border: 2px dashed var(--color-border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--color-text-muted);
+      border-radius: 8px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="sandbox-container">
+    <span class="label">Písek (Sandbox)</span>
+    <h1>Testování Rezervačního Systému</h1>
+    <p>Tato stránka je veřejnosti skrytá. Slouží výhradně pro zakladatele k otestování celého procesu (v češtině), dříve než se nasadí na hlavní web `motivus.cz`.</p>
+    
+    <!-- Zde přijde kód od Cal.com -->
+    <div id="cal-booking-place" class="cal-placeholder">
+      Zde se načte tvůj kalendář, jakmile vytvoříš účet a pošleš mi odkaz.
+    </div>
+    
+  </div>
+
+</body>
+</html>
