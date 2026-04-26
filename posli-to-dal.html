@@ -181,5 +181,28 @@
     </div>
   </div>
 
+  <!-- Footer -->
+  <footer style="text-align: center; padding: 3rem 0 2rem; border-top: 1px solid var(--color-glass-border); margin-top: 2rem;">
+    <div style="font-family: var(--font-heading); font-style: italic; font-size: 1.2rem; color: var(--color-accent); margin-bottom: 0.5rem;">„Sublevere Homines"</div>
+    <p style="font-size: 0.8rem; color: var(--color-text-muted); margin-bottom: 1rem;">© 2026 MOTIVUS. Všechna práva vyhrazena.</p>
+    <div style="display: flex; justify-content: center; gap: 1.5rem; font-size: 0.8rem;">
+      <a href="https://instagram.com/motivus.cz" target="_blank" rel="noopener" style="color: var(--color-text-muted);">Instagram</a>
+      <a href="mailto:info@motivus.cz" style="color: var(--color-text-muted);">info@motivus.cz</a>
+      <a href="ochrana-udaju.html" style="color: var(--color-text-muted);">Ochrana osobních údajů</a>
+    </div>
+  </footer>
+
+  <!-- Cookie Banner (přebírá styly z components.css, musíme jej tu přilinkovat) -->
+  <link rel="stylesheet" href="css/components.css">
+  <div id="cookie-banner" class="cookie-banner">
+    <p class="cookie-text">
+      Tento web používá k zajištění funkčnosti rezervací a plateb nezbytné soubory cookies. Nepoužíváme agresivní sledovací kódy. <a href="ochrana-udaju.html">Více informací</a>.
+    </p>
+    <div class="cookie-actions">
+      <button id="cookie-accept" class="btn btn-filled" style="padding: 0.6rem 1.5rem; font-size: 0.8rem;">Rozumím a přijímám</button>
+    </div>
+  </div>
+  <script src="js/cookie.js"></script>
+
 </body>
 </html>
