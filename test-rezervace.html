@@ -37,16 +37,13 @@
       margin-bottom: 40px;
       color: var(--color-text-muted);
     }
-    /* Placeholder widget box before Cal.com is added */
-    .cal-placeholder {
-      width: 100%;
-      height: 600px;
-      border: 2px dashed var(--color-border);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: var(--color-text-muted);
-      border-radius: 8px;
+    /* Cal.com Wrapper */
+    #my-cal-inline {
+      min-height: 700px;
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      box-shadow: var(--shadow-card);
+      background: var(--color-bg);
     }
   </style>
 </head>
@@ -58,10 +55,30 @@
     <p>Tato stránka je veřejnosti skrytá. Slouží výhradně pro zakladatele k otestování celého procesu (v češtině), dříve než se nasadí na hlavní web `motivus.cz`.</p>
     
     <!-- Zde přijde kód od Cal.com -->
-    <div id="cal-booking-place" class="cal-placeholder">
-      Zde se načte tvůj kalendář, jakmile vytvoříš účet a pošleš mi odkaz.
-    </div>
-    
+    <!-- Cal inline embed code begins -->
+    <div style="width:100%;height:100%;overflow:scroll" id="my-cal-inline"></div>
+    <script type="text/javascript">
+      (function (C, A, L) { let p = function (a, ar) { a.q.push(ar); }; let d = C.document; C.Cal = C.Cal || function () { let cal = C.Cal; let ar = arguments; if (!cal.loaded) { cal.ns = {}; cal.q = cal.q || []; d.head.appendChild(d.createElement("script")).src = A; cal.loaded = true; } if (ar[0] === L) { const api = function () { p(api, arguments); }; const namespace = ar[1]; api.q = api.q || []; typeof namespace === "string" ? (cal.ns[namespace] = api) && p(api, ar) : p(cal, ar); return; } p(cal, ar); }; })(window, "https://app.cal.com/embed/embed.js", "init");
+    Cal("init", {origin:"https://cal.com"});
+
+    // ZDE DOPLNIT TVŮJ LINK AŽ BUDE (např. "motivus/konzultace")
+    Cal("inline", {
+      elementOrSelector:"#my-cal-inline",
+      calLink: "rick/get-rick-rolled", // TODO: Vyměnit za skutečný odkaz na Cal.com
+      layout: "month_view"
+    });
+
+    Cal("ui", {
+      "styles": {
+        "branding": {
+          "brandColor": "#8B7355" // Motivus Accent Color
+        }
+      },
+      "hideEventTypeDetails": false,
+      "layout": "month_view"
+    });
+    </script>
+    <!-- Cal inline embed code ends -->
   </div>
 
 </body>
