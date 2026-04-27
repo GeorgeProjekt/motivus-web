@@ -506,7 +506,6 @@
 
 /* ===== COLLABORATION SECTION ===== */
 .collab-section {
-  background: var(--color-bg-alt);
   position: relative;
   overflow: hidden;
 }
