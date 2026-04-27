@@ -221,7 +221,7 @@
               </div>
               <div class="service-price">800–1 200 Kč</div>
               <div class="service-note">progresivní — klient rozhoduje</div>
-              <button class="btn btn-sm btn-booking" data-cal-placeholder="true" style="margin-top: 1rem; width: 100%; justify-content: center;">Rezervovat termín</button>
+              <button class="btn btn-sm btn-booking" data-cal-link="team/motivus/transformacni-koucink" data-cal-config='{"layout":"month_view"}' style="margin-top: 1rem; width: 100%; justify-content: center;">Rezervovat termín</button>
             </div>
 
             <div class="service-card reveal">
@@ -234,7 +234,7 @@
               </div>
               <div class="service-price">800–1 200 Kč</div>
               <div class="service-note">progresivní — klient rozhoduje</div>
-              <button class="btn btn-sm btn-booking" data-cal-placeholder="true" style="margin-top: 1rem; width: 100%; justify-content: center;">Rezervovat termín</button>
+              <button class="btn btn-sm btn-booking" data-cal-link="team/motivus/harmonizace-terapie" data-cal-config='{"layout":"month_view"}' style="margin-top: 1rem; width: 100%; justify-content: center;">Rezervovat termín</button>
             </div>
 
             <div class="service-card reveal">
@@ -246,7 +246,7 @@
               </div>
               <div class="service-price">1 500 Kč</div>
               <div class="service-note">fixní cena</div>
-              <button class="btn btn-sm btn-booking" data-cal-placeholder="true" style="margin-top: 1rem; width: 100%; justify-content: center;">Rezervovat termín</button>
+              <button class="btn btn-sm btn-booking" data-cal-link="team/motivus/reset-hlavy-a-nervoveho-systemu" data-cal-config='{"layout":"month_view"}' style="margin-top: 1rem; width: 100%; justify-content: center;">Rezervovat termín</button>
             </div>
 
             <div class="service-card reveal">
@@ -259,7 +259,7 @@
               </div>
               <div class="service-price">800–1 200 Kč</div>
               <div class="service-note">progresivní — klient rozhoduje</div>
-              <button class="btn btn-sm btn-booking" data-cal-placeholder="true" style="margin-top: 1rem; width: 100%; justify-content: center;">Rezervovat termín</button>
+              <button class="btn btn-sm btn-booking" data-cal-link="team/motivus/podpora-v-tezkych-situacich" data-cal-config='{"layout":"month_view"}' style="margin-top: 1rem; width: 100%; justify-content: center;">Rezervovat termín</button>
             </div>
           </div>
         </div>
@@ -277,7 +277,7 @@
                 <span style="flex-basis: 100%;">👨 Vede: Michal Smolík</span>
               </div>
               <div class="service-price">300–500 Kč/os</div>
-              <button class="btn btn-sm btn-booking" data-cal-placeholder="true" style="margin-top: 1rem; width: 100%; justify-content: center;">Rezervovat místo</button>
+              <button class="btn btn-sm btn-booking" data-cal-link="team/motivus/muzske-kruhy" data-cal-config='{"layout":"month_view"}' style="margin-top: 1rem; width: 100%; justify-content: center;">Rezervovat místo</button>
             </div>
 
             <div class="service-card reveal">
@@ -289,7 +289,7 @@
                 <span style="flex-basis: 100%;">👩 Vede: Kristýna Nosová</span>
               </div>
               <div class="service-price">300–500 Kč/os</div>
-              <button class="btn btn-sm btn-booking" data-cal-placeholder="true" style="margin-top: 1rem; width: 100%; justify-content: center;">Rezervovat místo</button>
+              <button class="btn btn-sm btn-booking" data-cal-link="team/motivus/zenske-kruhy" data-cal-config='{"layout":"month_view"}' style="margin-top: 1rem; width: 100%; justify-content: center;">Rezervovat místo</button>
             </div>
 
             <div class="service-card reveal">
@@ -554,12 +554,19 @@
   <script src="js/scroll-reveal.js"></script>
   <script src="js/nav.js"></script>
   <script src="js/contact.js?v=2"></script>
-  <script>
-    // Placeholder logika pro rezervační tlačítka do doby, než bude napojen Cal.com
-    document.querySelectorAll('.btn-booking[data-cal-placeholder="true"]').forEach(btn => {
-      btn.addEventListener('click', () => {
-        alert('Tady brzy vyskočí krásný rezervační kalendář propojený s mým Google kalendářem. Zatím se prosím objednejte přes e-mail.');
-      });
+  <!-- Cal.com Modal Init -->
+  <script type="text/javascript">
+    (function (C, A, L) { let p = function (a, ar) { a.q.push(ar); }; let d = C.document; C.Cal = C.Cal || function () { let cal = C.Cal; let ar = arguments; if (!cal.loaded) { cal.ns = {}; cal.q = cal.q || []; d.head.appendChild(d.createElement("script")).src = A; cal.loaded = true; } if (ar[0] === L) { const api = function () { p(api, arguments); }; const namespace = ar[1]; api.q = api.q || []; typeof namespace === "string" ? (cal.ns[namespace] = api) && p(api, ar) : p(cal, ar); return; } p(cal, ar); }; })(window, "https://app.cal.eu/embed/embed.js", "init");
+    Cal("init", {origin:"https://cal.eu"});
+
+    Cal("ui", {
+      "styles": {
+        "branding": {
+          "brandColor": "#8B7355" // Motivus Accent Color
+        }
+      },
+      "hideEventTypeDetails": false,
+      "layout": "month_view"
     });
   </script>
 
