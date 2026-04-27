@@ -8,6 +8,7 @@
   <link rel="icon" type="image/png" href="public/Motivus_logo.png" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content="Klub Pošli to dál — komunita lidí se společným příběhem. Dostal jsi hodnotu? Pošli to dál." />
+  <meta name="theme-color" content="#8B7355">
   <title>Pošli to dál | MOTIVUS</title>
 
   <!-- Fonts -->
@@ -21,6 +22,7 @@
   <link rel="stylesheet" href="css/base.css">
   <link rel="stylesheet" href="css/layout.css">
   <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/animations.css">
 
   <style>
     /* Page-specific styles */
@@ -187,13 +189,24 @@
 </head>
 <body>
 
+  <!-- Canvas Background -->
+  <div class="canvas-container" aria-hidden="true">
+    <canvas id="canvas-layer-1"></canvas>
+    <canvas id="canvas-layer-2"></canvas>
+  </div>
+
   <div class="container" style="position: relative; z-index: 10;">
     <!-- Navbar -->
     <nav style="padding: 2rem 0; display: flex; align-items: center; justify-content: space-between;">
       <a href="index.html" style="display: inline-flex; align-items: center; gap: 0.75rem; font-size: 0.85rem; letter-spacing: 0.05em; text-transform: uppercase; color: var(--color-text-muted); transition: color 0.3s;" onmouseover="this.style.color='var(--color-accent)'" onmouseout="this.style.color='var(--color-text-muted)'">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="m15 18-6-6 6-6"/></svg>Zpět na domovskou stránku
       </a>
-      <a href="en/pay-it-forward.html" style="border: 1px solid rgba(196,167,125,0.35); border-radius: 100px; padding: 0.3rem 1rem; color: var(--color-accent); font-weight: 500; font-size: 0.9rem;">EN</a>
+      <div style="display: flex; align-items: center; gap: 1rem;">
+        <a href="en/pay-it-forward.html" style="border: 1px solid rgba(196,167,125,0.35); border-radius: 100px; padding: 0.3rem 1rem; color: var(--color-accent); font-weight: 500; font-size: 0.9rem;">EN</a>
+        <button class="theme-toggle" id="theme-toggle" aria-label="Přepnout motiv" style="background: none; border: 1px solid var(--color-border); border-radius: 50%; width: 36px; height: 36px; cursor: pointer; color: var(--color-text-muted); font-size: 1rem; display: flex; align-items: center; justify-content: center;">
+          <span class="theme-icon">☽</span>
+        </button>
+      </div>
     </nav>
 
     <!-- Hero -->
@@ -283,28 +296,33 @@
   </div>
 
   <!-- Footer -->
-  <footer style="text-align: center; padding: 3rem 0 2rem; border-top: 1px solid var(--color-border); margin-top: 2rem;">
-    <div style="font-family: var(--font-heading); font-style: italic; font-size: 1.2rem; color: var(--color-accent); margin-bottom: 0.5rem;">„Sublevere Homines"</div>
-    <p style="font-size: 0.8rem; color: var(--color-text-muted); margin-bottom: 1rem;">© 2026 MOTIVUS. Všechna práva vyhrazena.</p>
-    <div style="display: flex; justify-content: center; gap: 1.5rem; font-size: 0.8rem;">
-      <a href="https://instagram.com/motivus.cz" target="_blank" rel="noopener" style="color: var(--color-text-muted);">Instagram</a>
-      <a href="mailto:info@motivus.cz" style="color: var(--color-text-muted);">info@motivus.cz</a>
-      <a href="ochrana-udaju.html" style="color: var(--color-text-muted);">Ochrana osobních údajů</a>
+  <footer class="footer">
+    <div class="container-narrow">
+      <div class="footer-motto">„Sublevere Homines"</div>
+      <p class="footer-copy">© 2026 MOTIVUS. Všechna práva vyhrazena.</p>
+      <div class="footer-links">
+        <a href="https://instagram.com/motivus.cz" target="_blank" rel="noopener">Instagram</a>
+        <a href="mailto:info@motivus.cz">info@motivus.cz</a>
+        <a href="ochrana-udaju.html">Ochrana osobních údajů</a>
+      </div>
     </div>
   </footer>
 
+  <!-- Scripts -->
+  <script src="js/canvas-bg.js"></script>
+  <script src="js/theme.js"></script>
+  <script src="js/scroll-reveal.js"></script>
+
   <!-- Cookie Banner -->
-  <link rel="stylesheet" href="css/components.css">
   <div id="cookie-banner" class="cookie-banner">
     <p class="cookie-text">
       Tento web používá k zajištění funkčnosti nezbytné soubory cookies. <a href="ochrana-udaju.html">Více informací</a>.
     </p>
     <div class="cookie-actions">
-      <button id="cookie-accept" class="btn btn-filled" style="padding: 0.6rem 1.5rem; font-size: 0.8rem;">Rozumím a přijímám</button>
+      <button id="cookie-accept" class="btn btn-sm">Rozumím a přijímám</button>
     </div>
   </div>
   <script src="js/cookie.js"></script>
-  <script src="js/scroll-reveal.js"></script>
 
 </body>
 </html>
