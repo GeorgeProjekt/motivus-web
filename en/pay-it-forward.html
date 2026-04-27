@@ -7,179 +7,307 @@
   <link rel="alternate" hreflang="x-default" href="https://motivus.cz/posli-to-dal.html" />
   <link rel="icon" type="image/png" href="../public/Motivus_logo.png" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Pay It Forward Club – a community project by MOTIVUS. How it works, what members gain, and how to join." />
+  <meta name="description" content="Pay It Forward Club — a community of people with a shared story. Did you receive value? Pay it forward." />
+  <meta name="theme-color" content="#8B7355">
   <title>Pay It Forward | MOTIVUS</title>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-  
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <!-- Design System (Paths point to parent directory) -->
+  <link rel="stylesheet" href="../css/reset.css">
+  <link rel="stylesheet" href="../css/tokens.css">
+  <link rel="stylesheet" href="../css/base.css">
+  <link rel="stylesheet" href="../css/layout.css">
+  <link rel="stylesheet" href="../css/components.css">
+  <link rel="stylesheet" href="../css/animations.css">
+
   <style>
-    /* ==========================================
-       PREMIUM DESIGN TOKENS 
-       ========================================== */
-    :root {
-      --color-bg-base: #100f0e;
-      --color-brown-glow: rgba(139, 115, 85, 0.15);
-      --color-green-glow: rgba(58, 74, 56, 0.15);
-      
-      --color-glass-bg: rgba(20, 19, 18, 0.6);
-      --color-glass-border: rgba(196, 167, 125, 0.12);
-      
-      --color-text: #F2EFE9;
-      --color-text-muted: #A8A29A;
-      
-      --color-accent: #C4A77D; 
-      
-      --font-heading: 'Cormorant Garamond', 'Times New Roman', serif;
-      --font-body: 'Inter', system-ui, -apple-system, sans-serif;
-
-      --size-h1: clamp(2.5rem, 6vw, 4.5rem);
-      --size-h2: clamp(1.8rem, 4vw, 2.5rem);
-      --size-body: clamp(1.05rem, 1.2vw, 1.2rem);
-
-      --ease-fluid: cubic-bezier(0.16, 1, 0.3, 1);
-      --duration-btn: 300ms;
+    /* Page-specific styles */
+    .ptd-hero {
+      min-height: 70vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding-top: var(--nav-height);
+    }
+    .ptd-hero-inner {
+      max-width: 800px;
+      padding: var(--space-lg) var(--space-md);
+    }
+    .ptd-hero .motto {
+      font-family: var(--font-heading);
+      font-size: clamp(2.8rem, 6vw, 4.5rem);
+      font-weight: 300;
+      font-style: italic;
+      line-height: 1.1;
+      color: var(--color-accent);
+      margin-bottom: var(--space-md);
+      opacity: 0;
+      animation: fadeInUp 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.3s forwards;
+    }
+    .ptd-hero .subtitle {
+      font-size: clamp(1.05rem, 1.2vw, 1.2rem);
+      font-weight: 300;
+      color: var(--color-text-muted);
+      line-height: 1.8;
+      max-width: 620px;
+      margin: 0 auto;
+      opacity: 0;
+      animation: fadeInUp 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.6s forwards;
     }
 
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
-
-    body {
-      font-family: var(--font-body); font-size: var(--size-body);
-      font-weight: 300; line-height: 1.8; color: var(--color-text);
-      background-color: var(--color-bg-base);
-      -webkit-font-smoothing: antialiased; overflow-x: hidden;
+    .ptd-section {
+      padding: var(--space-md) 0;
+    }
+    .ptd-section h2 {
+      font-family: var(--font-heading);
+      font-size: var(--size-h2);
+      color: var(--color-accent);
+      margin-bottom: var(--space-sm);
+    }
+    .ptd-section p {
+      color: var(--color-text-muted);
+      margin-bottom: var(--space-sm);
+      line-height: 1.8;
     }
 
-    /* Ambient Glows & Noise */
-    .ambient-glow {
-      position: fixed; width: 60vw; height: 60vw; max-width: 800px; max-height: 800px;
-      border-radius: 50%; filter: blur(120px); z-index: -1; opacity: 0.6; pointer-events: none;
+    .ptd-features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: var(--space-md);
+      margin: var(--space-md) 0;
     }
-    .ambient-glow.top { top: -20%; left: -10%; background: var(--color-brown-glow); }
-    .ambient-glow.bottom { bottom: -20%; right: -10%; background: var(--color-green-glow); }
-
-    body::after {
-      content: ''; position: fixed; inset: 0;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.2' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.02'/%3E%3C/svg%3E");
-      pointer-events: none; z-index: 999;
+    .ptd-feature {
+      background: var(--color-card-bg);
+      border: 1px solid var(--color-card-border);
+      border-radius: var(--radius-lg);
+      padding: 2rem 1.5rem;
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
     }
-
-    h1, h2, h3 { font-family: var(--font-heading); font-weight: 300; line-height: 1.1; letter-spacing: -0.01em; }
-    a { color: inherit; text-decoration: none; }
-    
-    .container { max-width: 840px; margin: 0 auto; padding: 0 2rem; position: relative; z-index: 10; }
-
-    /* Buttons */
-    .btn {
-      position: relative; display: inline-flex; align-items: center; justify-content: center; gap: 0.75rem;
-      padding: 1rem 2.2rem; border-radius: 100px;
-      font-family: var(--font-body); font-weight: 400; font-size: 0.9rem; letter-spacing: 0.05em; text-transform: uppercase;
-      cursor: pointer; overflow: hidden; transition: all var(--duration-btn) var(--ease-fluid);
-      border: 1px solid rgba(196, 167, 125, 0.35); color: var(--color-accent); background: transparent; backdrop-filter: blur(10px);
+    .ptd-feature:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-card);
+      border-color: rgba(139, 115, 85, 0.3);
     }
-    .btn::before {
-      content: ''; position: absolute; inset: 0; background: var(--color-accent);
-      transform: scaleX(0); transform-origin: left; transition: transform var(--duration-btn) var(--ease-fluid); z-index: -1;
+    .ptd-feature h3 {
+      font-family: var(--font-heading);
+      font-size: var(--size-h3);
+      margin-bottom: var(--space-xs);
     }
-    .btn:hover { color: var(--color-bg-base); border-color: var(--color-accent); }
-    .btn:hover::before { transform: scaleX(1); }
-    
-    .btn-filled { background: var(--color-accent); color: var(--color-bg-base); border: none; }
-    .btn-filled::before { background: #fff; opacity: 0.15; }
-
-    /* Navbar minimal */
-    .navbar {
-      padding: 2rem 0; display: flex; align-items: center; justify-content: space-between;
-    }
-    .back-link {
-      display: inline-flex; align-items: center; gap: 0.75rem;
-      font-size: 0.85rem; letter-spacing: 0.05em; text-transform: uppercase; color: var(--color-text-muted);
-      transition: color 0.3s;
-    }
-    .back-link:hover { color: var(--color-accent); }
-
-    /* Header */
-    .page-header { margin-top: 4rem; margin-bottom: 5rem; text-align: center; }
-    .page-header h1 { font-size: var(--size-h1); margin-bottom: 1rem; }
-    .page-header .motto { font-size: 1.4rem; color: var(--color-accent); font-style: italic; opacity: 0.9; }
-
-    /* Sections */
-    .content-section { margin-bottom: 6rem; }
-    .content-section h2 { font-size: var(--size-h2); margin-bottom: 1.5rem; color: var(--color-accent); }
-    .content-section p { margin-bottom: 1.5rem; color: var(--color-text-muted); }
-    
-    ul.check-list { list-style: none; margin: 2rem 0; }
-    ul.check-list li {
-      position: relative; padding-left: 2rem; margin-bottom: 1rem; color: var(--color-text-muted);
-    }
-    ul.check-list li::before {
-      content: '✦'; position: absolute; left: 0; top: 0; color: var(--color-accent); font-size: 0.8rem; line-height: 1.8;
+    .ptd-feature p {
+      color: var(--color-text-muted);
+      font-size: var(--size-small);
+      line-height: 1.7;
+      margin-bottom: 0;
     }
 
-    /* Glass card */
-    .glass-box {
-      background: var(--color-glass-bg); backdrop-filter: blur(24px); border: 1px solid var(--color-glass-border);
-      border-radius: 20px; padding: 4rem; margin: 4rem 0;
-      box-shadow: 0 30px 60px rgba(0,0,0,0.3);
+    .ptd-audience {
+      background: var(--color-card-bg);
+      border: 1px solid var(--color-card-border);
+      border-radius: var(--radius-lg);
+      padding: 2.5rem 2rem;
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      margin: var(--space-md) 0;
+      box-shadow: 0 30px 60px rgba(0, 0, 0, 0.3);
+    }
+    .ptd-audience ul {
+      list-style: none;
+      padding: 0;
+      margin: var(--space-sm) 0;
+    }
+    .ptd-audience ul li {
+      position: relative;
+      padding-left: 2rem;
+      margin-bottom: 0.8rem;
+      color: var(--color-text-muted);
+      line-height: 1.8;
+    }
+    .ptd-audience ul li::before {
+      content: '→';
+      position: absolute;
+      left: 0;
+      color: var(--color-accent);
     }
 
-    .cta-area { text-align: center; padding: 6rem 0; border-top: 1px solid var(--color-glass-border); margin-top: 4rem; }
-    .cta-area h2 { margin-bottom: 2rem; }
+    .ptd-cta {
+      text-align: center;
+      padding: var(--space-lg) 0;
+      border-top: 1px solid var(--color-border);
+      margin-top: var(--space-lg);
+    }
+    .ptd-cta h2 {
+      font-family: var(--font-heading);
+      font-size: var(--size-h2);
+      margin-bottom: var(--space-sm);
+    }
+    .ptd-cta p {
+      color: var(--color-text-muted);
+      margin-bottom: var(--space-md);
+      max-width: 500px;
+      margin-left: auto;
+      margin-right: auto;
+    }
 
-    .fade-up { opacity: 0; transform: translateY(30px); animation: fadeUpAnim 1s var(--ease-fluid) forwards; }
-    @keyframes fadeUpAnim { to { opacity: 1; transform: translateY(0); } }
-    
+    .ptd-quote {
+      font-family: var(--font-heading);
+      font-size: clamp(1.5rem, 3vw, 2rem);
+      font-style: italic;
+      color: var(--color-accent);
+      text-align: center;
+      padding: var(--space-lg) 0;
+      max-width: 700px;
+      margin: 0 auto;
+      line-height: 1.4;
+      opacity: 0.9;
+    }
+
     @media (max-width: 768px) {
-      .glass-box { padding: 2.5rem 1.5rem; }
+      .ptd-audience { padding: 2rem 1.5rem; }
     }
   </style>
 </head>
 <body>
 
-  <div class="ambient-glow top"></div>
-  <div class="ambient-glow bottom"></div>
+  <!-- Canvas Background -->
+  <div class="canvas-container" aria-hidden="true">
+    <canvas id="canvas-layer-1"></canvas>
+    <canvas id="canvas-layer-2"></canvas>
+  </div>
 
-  <div class="container">
-    <nav class="navbar fade-up">
-      <a href="index.html" class="back-link">
+  <div class="container" style="position: relative; z-index: 10;">
+    <!-- Navbar -->
+    <nav style="padding: 2rem 0; display: flex; align-items: center; justify-content: space-between;">
+      <a href="index.html" style="display: inline-flex; align-items: center; gap: 0.75rem; font-size: 0.85rem; letter-spacing: 0.05em; text-transform: uppercase; color: var(--color-text-muted); transition: color 0.3s;" onmouseover="this.style.color='var(--color-accent)'" onmouseout="this.style.color='var(--color-text-muted)'">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="m15 18-6-6 6-6"/></svg>Back to home page
       </a>
-      <a href="../posli-to-dal.html" class="lang-toggle" aria-label="Switch to Czech" title="Češtine" style="border: 1px solid rgba(196,167,125,0.35); border-radius: 100px; padding: 0.3rem 1rem; color: var(--color-accent); font-weight: 500; font-size: 0.9rem;">CZ</a>
+      <div style="display: flex; align-items: center; gap: 1rem;">
+        <a href="../posli-to-dal.html" style="border: 1px solid rgba(196,167,125,0.35); border-radius: 100px; padding: 0.3rem 1rem; color: var(--color-accent); font-weight: 500; font-size: 0.9rem;">CZ</a>
+        <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme" style="background: none; border: 1px solid var(--color-border); border-radius: 50%; width: 36px; height: 36px; cursor: pointer; color: var(--color-text-muted); font-size: 1rem; display: flex; align-items: center; justify-content: center;">
+          <span class="theme-icon">☽</span>
+        </button>
+      </div>
     </nav>
 
-    <div class="page-header fade-up" style="animation-delay: 100ms;">
-      <h1>The "Pay It Forward" Club</h1>
-      <p class="motto">"Did you receive value? Pay it forward."</p>
+    <!-- Hero -->
+    <section class="ptd-hero">
+      <div class="ptd-hero-inner">
+        <span class="label" style="opacity: 0; animation: fadeInUp 1s cubic-bezier(0.16, 1, 0.3, 1) 0.1s forwards;">A community with a shared story</span>
+        <h1 class="motto">"Did you receive value?<br>Pay it forward."</h1>
+        <p class="subtitle">We are not a membership program. Not a subscription. We are a closed community of people who want to be part of a chain that pulls others up.</p>
+      </div>
+    </section>
+
+    <!-- O co jde -->
+    <section class="ptd-section reveal" style="padding-top: 0;">
+      <h2 style="text-align: center; margin-bottom: var(--space-lg);">What it is about</h2>
+      <div style="max-width: 700px; margin: 0 auto;">
+        <p>There are people who have gone through something difficult — and emerged stronger. They changed their perspective on themselves, on relationships, on life. And now they feel the need to pass on what they received. Not as advice. Not as a lesson. But as an authentic human story that can show someone else they are not alone.</p>
+        <p>The "Pay It Forward" club is a place for these people. For those who have chosen the path of conscious change — and want to have others around them who understand. Who live it. Who get it.</p>
+        <p>No gurus. No "5 steps to a better you". Just people holding each other up on the journey.</p>
+      </div>
+    </section>
+
+    <!-- Citace -->
+    <div class="ptd-quote reveal">
+      "What we have received, we pass on.<br>That is the whole principle."
     </div>
 
-    <div class="content-section fade-up" style="animation-delay: 200ms;">
-      <h2>Birth of a True Community</h2>
-      <p>The "Pay It Forward" club is the central structural element of the MOTIVUS association. It originated from a clear intention to ensure an organic continuation and spread of personal development among people — without pressure, based on volunteering and lived experience.</p>
-      <p>This is not a mass-market affair. It is an interconnected ecosystem of individuals who want to step beyond individual self-work and enter a shared format. The community thrives through small contributions, which directly fund the further growth and possibilities of our association.</p>
-    </div>
+    <!-- Co v klubu najdeš -->
+    <section class="ptd-section reveal">
+      <h2 style="text-align: center;">What you will find in the club</h2>
+      <div class="ptd-features" style="max-width: 900px; margin: var(--space-md) auto;">
+        <div class="ptd-feature reveal">
+          <div style="font-family: var(--font-heading); font-size: 1.5rem; color: var(--color-accent); margin-bottom: 0.5rem; font-style: italic;">I.</div>
+          <h3>A Closed Community</h3>
+          <p>People who understand each other. A safe space for sharing challenges, successes, and falls — without masks, without judgment.</p>
+        </div>
+        <div class="ptd-feature reveal">
+          <div style="font-family: var(--font-heading); font-size: 1.5rem; color: var(--color-accent); margin-bottom: 0.5rem; font-style: italic;">II.</div>
+          <h3>Mutual Support</h3>
+          <p>Encouragement, challenges, shared growth. Not advice from "experts", but authentic stories of people who are living it.</p>
+        </div>
+        <div class="ptd-feature reveal">
+          <div style="font-family: var(--font-heading); font-size: 1.5rem; color: var(--color-accent); margin-bottom: 0.5rem; font-style: italic;">III.</div>
+          <h3>Online Lectures</h3>
+          <p>Working with emotions, the inner child, behavioral patterns, raising children, using AI in personal development. Recordings always available.</p>
+        </div>
+        <div class="ptd-feature reveal">
+          <div style="font-family: var(--font-heading); font-size: 1.5rem; color: var(--color-accent); margin-bottom: 0.5rem; font-style: italic;">IV.</div>
+          <h3>Local Gatherings</h3>
+          <p>Invitations to circles and community evenings at the Motivus Space. Real-life contact that no screen can replace.</p>
+        </div>
+      </div>
+    </section>
 
-    <div class="glass-box fade-up" style="animation-delay: 300ms;">
-      <h2 style="color: var(--color-text); margin-bottom: 2rem; font-size: 2rem;">Membership Architecture</h2>
-      <ul class="check-list">
-        <li><strong>Focused Growth:</strong> We are primarily focusing on building a strong core in the Moravian-Silesian region, with a reach across the entire Czech Republic.</li>
-        <li><strong>Co-creation:</strong> Members are not just passive consumers of services; their contributions shape the future format of retreats and community events.</li>
-        <li><strong>Member Benefits:</strong> Exclusive access to men's/women's circles, discounted conditions for transformational coaching, priority booking for retreat events.</li>
-      </ul>
-    </div>
+    <!-- Pro koho to je -->
+    <section class="ptd-section reveal">
+      <div class="ptd-audience" style="max-width: 800px; margin: 0 auto;">
+        <h2 style="color: var(--color-text); text-align: center;">Who it is for</h2>
+        <ul style="max-width: 600px; margin: var(--space-md) auto 0;">
+          <li>For those who have already undergone inner transformation and want to help others on this journey.</li>
+          <li>For those who are in the midst of change and are looking for people who understand.</li>
+          <li>For those who feel they do not want to be alone in this.</li>
+          <li>For those who believe that sharing experiences changes lives more than any theory.</li>
+        </ul>
+      </div>
+    </section>
 
-    <div class="content-section fade-up" style="animation-delay: 400ms;">
-      <h2>Mechanisms of Support</h2>
-      <p>The core idea is highly straightforward: If a personal coaching process, therapy, or retreat with MOTIVUS has helped you, we offer a space to "pass that value forward". Your small regular contribution opens the door to creating a stable foundation for the organization. By doing this, we extract development organizations from their dependency on short-term grants and give them a solid footprint for the years to come.</p>
-    </div>
+    <!-- Jak to funguje -->
+    <section class="ptd-section reveal">
+      <h2 style="text-align: center; margin-bottom: var(--space-md);">How it works</h2>
+      <div style="max-width: 700px; margin: 0 auto;">
+        <p>Right now, we are building the core of the community in the form of a <strong>closed WhatsApp group</strong>. We are looking for the first people who want to be there from the beginning — people for whom this idea is not just nice words, but something they truly live.</p>
+        <p>Initially, we want to gauge the interest in this format, which is why entry is currently completely free (later it will be just a symbolic contribution to operations). If the idea resonates with you and you want to be a part of it, write to us. We will invite you directly to the group where it all begins.</p>
+        <p>No commitment. No pressure. Just an open door for those who want to walk through.</p>
+      </div>
+    </section>
 
-    <div class="cta-area fade-up" style="animation-delay: 500ms;">
-      <h2>Do you feel in sync with us?</h2>
-      <p style="color: var(--color-text-muted); margin-bottom: 3rem;">The community is growing. Join us and experience the power of our shared safe space firsthand.</p>
+    <!-- CTA -->
+    <section class="ptd-cta reveal">
+      <h2>Do you want to be a part of it?</h2>
+      <p>Write to us and we will invite you to the closed group. No commitment, no pressure — just an open door.</p>
       <div style="display: flex; gap: 1.5rem; justify-content: center; flex-wrap: wrap;">
-        <a href="https://instagram.com/motivus.cz" class="btn btn-filled" target="_blank" rel="noopener">Visit us on Instagram</a>
-        <a href="index.html#pilire" class="btn">Explore the 4 Pillars</a>
+        <a href="index.html#kontakt" class="btn btn-filled">I want to join</a>
+        <a href="https://instagram.com/motivus.cz" target="_blank" rel="noopener" class="btn">Follow on Instagram</a>
+      </div>
+    </section>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container-narrow">
+      <div class="footer-motto">"Sublevere Homines"</div>
+      <p class="footer-copy">© 2026 MOTIVUS. All rights reserved.</p>
+      <div class="footer-links">
+        <a href="https://instagram.com/motivus.cz" target="_blank" rel="noopener">Instagram</a>
+        <a href="mailto:info@motivus.cz">info@motivus.cz</a>
+        <a href="../ochrana-udaju.html">Privacy Policy</a>
       </div>
     </div>
+  </footer>
+
+  <!-- Scripts (Paths point to parent directory) -->
+  <script src="../js/canvas-bg.js"></script>
+  <script src="../js/theme.js"></script>
+  <script src="../js/scroll-reveal.js"></script>
+
+  <!-- Cookie Banner -->
+  <div id="cookie-banner" class="cookie-banner">
+    <p class="cookie-text">
+      This website uses essential cookies to ensure functionality. <a href="../ochrana-udaju.html">More information</a>.
+    </p>
+    <div class="cookie-actions">
+      <button id="cookie-accept" class="btn btn-sm">I understand and accept</button>
+    </div>
   </div>
+  <script src="../js/cookie.js"></script>
 
 </body>
 </html>
