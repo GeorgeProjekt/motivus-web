@@ -338,7 +338,6 @@
 
 /* ===== PROJECT CTA ===== */
 .project-section {
-  background: var(--color-bg-alt);
   position: relative;
 }
 .project-inner {
