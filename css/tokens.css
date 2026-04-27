@@ -55,7 +55,7 @@
   --space-lg: 4rem;
   --space-xl: 6rem;
   --space-2xl: 10rem;
-  --section-gap: clamp(5rem, 12vh, 10rem);
+  --section-gap: clamp(3rem, 6vh, 5rem);
 
   /* Borders */
   --radius-sm: 4px;
