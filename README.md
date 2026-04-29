@@ -1,16 +1,48 @@
-# React + Vite
+# Motivus Web Application
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Tento repozitář obsahuje webovou a backendovou infrastrukturu projektu **Motivus**. 
 
-Currently, two official plugins are available:
+## 🚀 Komponenty
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+1. **Frontend (React + Vite + TailwindCSS)**
+   - Prezentační Single Page Aplikace (SPA) pro značku Motivus.
+   - Integrace s rezervačním systémem **Cal.com**.
+   - Moderní animace, Glassmorphism design a responzivní rozhraní.
 
-## React Compiler
+2. **Backend: Platební brána & Fakturace (`/billing/`)**
+   - **Stripe Webhook Server** (`webhook_server.py`) - zachytává úspěšné platby z Cal.com / Stripe v měně CZK.
+   - **Fakturoid Integrace** (`fakturoid_client.py`) - automaticky vystavuje faktury zákazníkům přes API v3 po přijetí platby a odesílá je e-mailem.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+3. **AI Účetní Engine (`/ai_ucetni/`)**
+   - Automatizovaný systém pro OSVČ v týmu Motivus.
+   - Obsahuje daňový kalkulátor pro rok 2026 (porovnává výhodnost paušální daně vs. skutečných výdajů).
+   - **GPT-4o Vision OCR:** Skript `ocr_pipeline.py` umožňuje naskenovat vyfocenou účtenku a automaticky z ní extrahovat strukturovaná data (DPH, IČO, částku a kategorii) do SQLite databáze.
 
-## Expanding the ESLint configuration
+## ⚙️ Spuštění a Vývoj
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+**Požadavky:**
+- Node.js & npm (pro frontend)
+- Python 3.10+ (pro webhooky a AI účetního)
+
+### Frontend
+```bash
+npm install
+npm run dev
+```
+
+### Backend (Stripe Webhook + Fakturoid)
+Ujistěte se, že máte `.env` soubor s vyplněnými klíči (`STRIPE_SECRET_KEY`, `FAKTUROID_CLIENT_ID`, atd.).
+```bash
+pip install -r requirements.txt  # pokud existuje
+python billing/webhook_server.py
+```
+*Server běží lokálně na portu 4242.*
+
+### AI Účetní
+```bash
+python ai_ucetni/main.py init
+python ai_ucetni/main.py status
+```
+
+---
+*Vytvořeno pro tým Motivus (2026).*

@@ -1,0 +1,9 @@
+# Database files
+*.db
+
+# Receipt images
+receipts/
+
+# Python cache
+__pycache__/
+*.pyc
