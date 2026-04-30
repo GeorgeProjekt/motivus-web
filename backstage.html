@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Motivus Backstage | AI Účetní</title>
+    <link href="css/tokens.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: var(--color-background, #1a1a1a);
+            color: var(--color-text-primary, #ffffff);
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .dashboard {
+            width: 100%;
+            max-width: 500px;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            margin-top: 50px;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 24px;
+            color: var(--color-accent-primary, #8b7355);
+            margin-bottom: 5px;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #888;
+            font-size: 14px;
+            margin-bottom: 30px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: rgba(0, 0, 0, 0.2);
+            padding: 15px;
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 22px;
+            font-weight: bold;
+            color: #fff;
+            margin-top: 5px;
+        }
+
+        .btn-scan {
+            width: 100%;
+            background: var(--color-accent-primary, #8b7355);
+            color: white;
+            border: none;
+            padding: 15px;
+            font-size: 18px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .btn-scan:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(139, 115, 85, 0.4);
+        }
+
+        .btn-scan:active {
+            transform: translateY(0);
+        }
+
+        #file-input {
+            display: none;
+        }
+
+        .loader {
+            display: none;
+            text-align: center;
+            margin-top: 20px;
+            color: #8b7355;
+            font-weight: bold;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 0.5; }
+            50% { opacity: 1; }
+            100% { opacity: 0.5; }
+        }
+
+        #result-box {
+            display: none;
+            margin-top: 20px;
+            background: rgba(46, 204, 113, 0.1);
+            border: 1px solid #2ecc71;
+            padding: 15px;
+            border-radius: 10px;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="dashboard">
+        <h1>Motivus AI Účetní</h1>
+        <div class="subtitle">Zabezpečená administrace</div>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div>Daň 2026 (Paušál)</div>
+                <div class="stat-value" id="tax-pausal">-- Kč</div>
+            </div>
+            <div class="stat-card">
+                <div>Daň 2026 (Skutečné)</div>
+                <div class="stat-value" id="tax-real">-- Kč</div>
+            </div>
+        </div>
+
+        <button class="btn-scan" onclick="document.getElementById('file-input').click()">
+            📸 Naskenovat účtenku
+        </button>
+        <input type="file" id="file-input" accept="image/*" capture="environment" onchange="uploadReceipt(this)">
+
+        <div class="loader" id="loader">⚙️ AI zpracovává doklad (GPT-4o Vision)...</div>
+        
+        <div id="result-box"></div>
+    </div>
+
+    <script>
+        // V produkci (na Forpsi) to poběží na stejné doméně
+        const API_URL = '/api';
+        const AUTH_HEADER = 'Basic ' + btoa('motivus:robot2026');
+
+        // Načtení stavu při startu
+        async function loadStatus() {
+            try {
+                const res = await fetch(`${API_URL}/status`, {
+                    headers: { 'Authorization': AUTH_HEADER }
+                });
+                const data = await res.json();
+                
+                // Formátování měny
+                const formatter = new Intl.NumberFormat('cs-CZ', { style: 'currency', currency: 'CZK', maximumFractionDigits: 0 });
+                
+                if (data.taxes) {
+                    document.getElementById('tax-pausal').innerText = formatter.format(data.taxes.pausal.tax);
+                    document.getElementById('tax-real').innerText = formatter.format(data.taxes.actual.tax);
+                }
+            } catch (err) {
+                console.error("API offline", err);
+            }
+        }
+
+        async function uploadReceipt(input) {
+            if (!input.files || input.files.length === 0) return;
+            const file = input.files[0];
+            
+            const loader = document.getElementById('loader');
+            const resultBox = document.getElementById('result-box');
+            
+            loader.style.display = 'block';
+            resultBox.style.display = 'none';
+
+            const formData = new FormData();
+            formData.append('file', file);
+
+            try {
+                const res = await fetch(`${API_URL}/upload`, {
+                    method: 'POST',
+                    headers: { 'Authorization': AUTH_HEADER },
+                    body: formData
+                });
+                
+                const data = await res.json();
+                
+                if(data.status === 'success') {
+                    resultBox.style.display = 'block';
+                    resultBox.innerHTML = `
+                        <b>✅ Účtenka zpracována!</b><br>
+                        Dodavatel: ${data.extracted_data.vendor_name}<br>
+                        Částka: ${data.extracted_data.total_amount} Kč<br>
+                        Kategorie: ${data.extracted_data.category}
+                    `;
+                    // Obnovit data
+                    loadStatus();
+                } else {
+                    alert('Chyba: ' + data.detail);
+                }
+            } catch (err) {
+                alert('Nepodařilo se připojit k AI Účetnímu. Běží server?');
+            } finally {
+                loader.style.display = 'none';
+            }
+        }
+
+        // Spustit při načtení
+        loadStatus();
+    </script>
+</body>
+</html>
