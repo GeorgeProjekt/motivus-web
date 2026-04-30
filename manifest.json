@@ -1,0 +1,20 @@
+{
+  "name": "Motivus AI Účetní",
+  "short_name": "AI Účetní",
+  "start_url": "/backstage.html",
+  "display": "standalone",
+  "background_color": "#1a1a1a",
+  "theme_color": "#8b7355",
+  "icons": [
+    {
+      "src": "images/favicon.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "images/favicon.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
