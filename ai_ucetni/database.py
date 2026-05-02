@@ -88,6 +88,22 @@ def init_db():
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
             UNIQUE(provider_id, year, month)
         );
+
+        -- Čekající sezení (Zaplacené zálohy)
+        CREATE TABLE IF NOT EXISTS pending_sessions (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            provider_id INTEGER NOT NULL REFERENCES providers(id),
+            client_name TEXT,
+            client_email TEXT,
+            client_phone TEXT,
+            service_name TEXT,
+            service_key TEXT,
+            total_price REAL NOT NULL,
+            deposit_paid REAL NOT NULL,
+            stripe_intent_id TEXT UNIQUE,
+            status TEXT DEFAULT 'pending',
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        );
     """)
 
     conn.commit()
@@ -236,6 +252,57 @@ def get_recent_expenses(provider_id: int, limit: int = 10) -> list:
     ).fetchall()
     conn.close()
     return [dict(r) for r in rows]
+
+
+# ──────────────── Pending Sessions CRUD ────────────────
+
+
+def add_pending_session(provider_id: int, client_name: str, client_email: str,
+                        service_name: str, total_price: float, deposit_paid: float,
+                        stripe_intent_id: str, service_key: str = None, client_phone: str = None) -> int:
+    conn = get_connection()
+    cursor = conn.cursor()
+    cursor.execute(
+        """INSERT INTO pending_sessions (provider_id, client_name, client_email, client_phone,
+           service_name, service_key, total_price, deposit_paid, stripe_intent_id)
+           VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)""",
+        (provider_id, client_name, client_email, client_phone,
+         service_name, service_key, total_price, deposit_paid, stripe_intent_id)
+    )
+    conn.commit()
+    sid = cursor.lastrowid
+    conn.close()
+    return sid
+
+
+def get_pending_sessions(provider_id: int = None) -> list:
+    conn = get_connection()
+    if provider_id:
+        rows = conn.execute("SELECT * FROM pending_sessions WHERE provider_id = ? AND status = 'pending' ORDER BY created_at DESC", (provider_id,)).fetchall()
+    else:
+        rows = conn.execute("SELECT * FROM pending_sessions WHERE status = 'pending' ORDER BY created_at DESC").fetchall()
+    conn.close()
+    return [dict(r) for r in rows]
+
+
+def get_session(session_id: int) -> dict:
+    conn = get_connection()
+    row = conn.execute("SELECT * FROM pending_sessions WHERE id = ?", (session_id,)).fetchone()
+    conn.close()
+    return dict(row) if row else None
+
+
+def mark_session_invoiced(session_id: int):
+    conn = get_connection()
+    conn.execute("UPDATE pending_sessions SET status = 'invoiced' WHERE id = ?", (session_id,))
+    conn.commit()
+    conn.close()
+
+def mark_session_cancelled(session_id: int):
+    conn = get_connection()
+    conn.execute("UPDATE pending_sessions SET status = 'cancelled' WHERE id = ?", (session_id,))
+    conn.commit()
+    conn.close()
 
 
 if __name__ == "__main__":

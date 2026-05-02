@@ -10,11 +10,11 @@ import json
 import stripe
 from http.server import HTTPServer, BaseHTTPRequestHandler
 from dotenv import load_dotenv
-from fakturoid_client import (
-    get_or_create_contact,
-    create_invoice,
-    test_connection as test_fakturoid,
-)
+from fakturoid_client import test_connection as test_fakturoid
+
+import sys
+sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
+from ai_ucetni.database import add_pending_session
 
 load_dotenv(os.path.join(os.path.dirname(__file__), '..', '.env'))
 
@@ -98,36 +98,35 @@ def handle_payment_succeeded(event):
     total_price = float(metadata.get("total_price", service.get("total_price", deposit_amount)))
     provider_ico = PROVIDER_ICO.get(provider_name, "24400505")
     
-    print(f"📄 Creating invoice for {client_name} ({client_email})")
+    print(f"📄 Saving pending session for {client_name} ({client_email})")
     print(f"   Service: {service['name']}")
     print(f"   Total: {total_price} CZK, Deposit: {deposit_amount} CZK")
-    print(f"   Provider: {provider_name} (IČO: {provider_ico})")
+    print(f"   Provider: {provider_name}")
     
     try:
-        # 1. Find or create contact in Fakturoid
-        contact = get_or_create_contact(
-            name=client_name or client_email.split("@")[0],
-            email=client_email,
-            phone=client_phone,
-        )
-        print(f"   Contact: #{contact['id']} ({contact['name']})")
-        
-        # 2. Create invoice
-        invoice = create_invoice(
-            contact_id=contact["id"],
+        # Determine provider_id roughly based on name
+        provider_id = 1
+        if "Michal" in provider_name:
+            provider_id = 3
+        elif "Kristýna" in provider_name:
+            provider_id = 2
+            
+        add_pending_session(
+            provider_id=provider_id,
+            client_name=client_name or client_email.split("@")[0],
+            client_email=client_email,
+            client_phone=client_phone,
             service_name=service["name"],
+            service_key=service_key,
             total_price=total_price,
             deposit_paid=deposit_amount,
-            provider_name=provider_name,
-            provider_ico=provider_ico,
-            note=f"Poskytovatel: {provider_name}, IČO: {provider_ico}\n"
-                 f"Stripe Payment: {payment_intent['id']}",
+            stripe_intent_id=payment_intent['id']
         )
-        print(f"   ✅ Invoice #{invoice['id']} created and sent!")
+        print(f"   ✅ Session recorded as pending in DB!")
         return True
         
     except Exception as e:
-        print(f"   ❌ Error creating invoice: {e}")
+        print(f"   ❌ Error saving session: {e}")
         return False
 
 
@@ -217,8 +216,8 @@ def main():
     # Test Stripe connection
     print("\nTesting Stripe connection...")
     try:
-        account = stripe.Account.retrieve()
-        print(f"✅ Stripe: {account.get('settings', {}).get('dashboard', {}).get('display_name', account['id'])}")
+        balance = stripe.Balance.retrieve()
+        print(f"✅ Stripe connection OK (Balance object retrieved)")
     except Exception as e:
         print(f"❌ Stripe connection failed: {e}")
         print("   Check your STRIPE_SECRET_KEY in .env")

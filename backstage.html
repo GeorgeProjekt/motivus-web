@@ -122,9 +122,67 @@
             border-radius: 10px;
             font-size: 14px;
         }
+
+        .section-title {
+            margin-top: 40px;
+            margin-bottom: 15px;
+            font-size: 18px;
+            color: #ccc;
+            text-align: left;
+            width: 100%;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            padding-bottom: 5px;
+        }
+
+        .session-card {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 15px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .session-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        .session-details {
+            font-size: 14px;
+            color: #aaa;
+            margin-bottom: 15px;
+        }
+
+        .btn-invoice {
+            width: 100%;
+            background: #2ecc71;
+            color: #111;
+            border: none;
+            padding: 10px;
+            font-size: 14px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        
+        .btn-invoice:disabled {
+            background: #555;
+            cursor: not-allowed;
+        }
     </style>
 </head>
 <body>
+
+    <!-- Bezpečnostní PIN obrazovka -->
+    <div id="pin-overlay" style="position:fixed; top:0; left:0; width:100%; height:100%; background:#1a1a1a; z-index:9999; display:flex; flex-direction:column; align-items:center; justify-content:center;">
+        <h2 style="color:#8b7355; margin-bottom:20px;">Zadejte PIN</h2>
+        <input type="password" id="pin-input" style="padding:15px; font-size:24px; text-align:center; border-radius:10px; border:1px solid #8b7355; background:rgba(0,0,0,0.5); color:#fff; width:200px; margin-bottom:20px;" placeholder="****">
+        <button onclick="checkPin()" class="btn-scan" style="width:200px;">Vstoupit</button>
+    </div>
 
     <div class="dashboard">
         <h1>Motivus AI Účetní</h1>
@@ -149,6 +207,13 @@
         <div class="loader" id="loader">⚙️ AI zpracovává doklad (GPT-4o Vision)...</div>
         
         <div id="result-box"></div>
+
+        <div class="section-title">⏳ Sezení čekající na fakturaci</div>
+        <div id="pending-sessions-container">
+            <!-- Dynamically populated -->
+            <div style="text-align:center; color:#888; font-size:14px;">Načítám...</div>
+        </div>
+
     </div>
 
     <script>
@@ -156,7 +221,28 @@
         const API_URL = '/api';
         const AUTH_HEADER = 'Basic ' + btoa('motivus:robot2026');
 
-        // Načtení stavu při startu
+        // Bezpečnostní PIN pro veřejně přístupný web
+        function checkPin() {
+            const pin = document.getElementById('pin-input').value;
+            if (pin === '2026') { 
+                document.getElementById('pin-overlay').style.display = 'none';
+                // Načíst data až po odemčení
+                loadStatus();
+                loadPendingSessions();
+            } else {
+                alert('Nesprávný PIN');
+                document.getElementById('pin-input').value = '';
+            }
+        }
+
+        // Umožnit odeslání PINu přes Enter
+        document.getElementById('pin-input').addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') {
+                checkPin();
+            }
+        });
+
+        // Načtení stavu
         async function loadStatus() {
             try {
                 const res = await fetch(`${API_URL}/status`, {
@@ -199,15 +285,33 @@
                 const data = await res.json();
                 
                 if(data.status === 'success') {
+                    // Počkáme na přepočet a získáme nová data
+                    const taxesRes = await fetch(`${API_URL}/status`, { headers: { 'Authorization': AUTH_HEADER }});
+                    const taxesData = await taxesRes.json();
+                    
+                    let insightText = "";
+                    if (taxesData.taxes) {
+                        const formatter = new Intl.NumberFormat('cs-CZ', { style: 'currency', currency: 'CZK', maximumFractionDigits: 0 });
+                        // Aktualizujeme horní karty
+                        document.getElementById('tax-pausal').innerText = formatter.format(taxesData.taxes.pausal.tax);
+                        document.getElementById('tax-real').innerText = formatter.format(taxesData.taxes.actual.tax);
+                        
+                        // Získáme text doporučení
+                        const rec = taxesData.taxes.recommended === 'pausal' ? 'Paušál' : 'Skutečné výdaje';
+                        const adv = formatter.format(taxesData.taxes.advantage);
+                        insightText = `<br><br><i style="color:#f39c12;">💡 <b>${rec}</b> je pro vás momentálně výhodnější o <b>${adv}</b>.</i>`;
+                    }
+                    
                     resultBox.style.display = 'block';
                     resultBox.innerHTML = `
-                        <b>✅ Účtenka zpracována!</b><br>
-                        Dodavatel: ${data.extracted_data.vendor_name}<br>
-                        Částka: ${data.extracted_data.total_amount} Kč<br>
-                        Kategorie: ${data.extracted_data.category}
+                        <b>✅ Účtenka zaevidována!</b><br><br>
+                        <b>Dodavatel:</b> ${data.extracted_data.vendor_name}<br>
+                        <b>Částka:</b> ${data.extracted_data.total_amount} Kč<br>
+                        <b>Kategorie:</b> ${data.extracted_data.category}
+                        ${insightText}
+                        <br><br>
+                        <button onclick="document.getElementById('result-box').style.display='none'" style="width:100%; padding:10px; border-radius:8px; border:none; background:#8b7355; color:white; cursor:pointer; font-weight:bold;">👍 Rozumím</button>
                     `;
-                    // Obnovit data
-                    loadStatus();
                 } else {
                     alert('Chyba: ' + data.detail);
                 }
@@ -218,8 +322,109 @@
             }
         }
 
-        // Spustit při načtení
-        loadStatus();
+        async function loadPendingSessions() {
+            const container = document.getElementById('pending-sessions-container');
+            try {
+                const res = await fetch(`${API_URL}/pending-sessions`, {
+                    headers: { 'Authorization': AUTH_HEADER }
+                });
+                const data = await res.json();
+                
+                if (data.sessions && data.sessions.length > 0) {
+                    container.innerHTML = '';
+                    data.sessions.forEach(session => {
+                        const dateObj = new Date(session.created_at);
+                        const dateStr = dateObj.toLocaleDateString('cs-CZ');
+                        const total = session.total_price;
+                        const deposit = session.deposit_paid;
+                        
+                        const card = document.createElement('div');
+                        card.className = 'session-card';
+                        card.innerHTML = `
+                            <div class="session-header">
+                                <span>${session.client_name}</span>
+                                <span>${dateStr}</span>
+                            </div>
+                            <div class="session-details">
+                                Služba: ${session.service_name}<br>
+                                Celkem: ${total} Kč | Zaplacená záloha: ${deposit} Kč
+                            </div>
+                            <button class="btn-invoice" id="btn-inv-${session.id}" onclick="invoiceSession(${session.id})">
+                                ✅ Sezení proběhlo - Vystavit fakturu
+                            </button>
+                            <button class="btn-cancel" id="btn-cancel-${session.id}" onclick="cancelSession(${session.id})" style="width:100%; background:rgba(231, 76, 60, 0.2); color:#e74c3c; border:1px solid rgba(231, 76, 60, 0.5); padding:8px; font-size:13px; border-radius:8px; cursor:pointer; font-weight:bold; margin-top:8px;">
+                                ❌ Storno (Klient nepřišel)
+                            </button>
+                        `;
+                        container.appendChild(card);
+                    });
+                } else {
+                    container.innerHTML = '<div style="text-align:center; color:#888; font-size:14px;">Žádná čekající sezení.</div>';
+                }
+            } catch (err) {
+                console.error("Failed to load sessions", err);
+                container.innerHTML = '<div style="color:#e74c3c;">Chyba načítání</div>';
+            }
+        }
+
+        async function invoiceSession(id) {
+            if(!confirm('Opravdu chcete vystavit konečnou fakturu pro toto sezení? Faktura se rovnou odešle e-mailem klientovi.')) return;
+            
+            const btn = document.getElementById(`btn-inv-${id}`);
+            btn.disabled = true;
+            btn.innerText = "⏳ Vystavuji...";
+
+            try {
+                const res = await fetch(`${API_URL}/sessions/${id}/invoice`, {
+                    method: 'POST',
+                    headers: { 'Authorization': AUTH_HEADER }
+                });
+                const data = await res.json();
+                
+                if(data.status === 'success') {
+                    alert('Faktura č. ' + data.invoice_id + ' byla úspěšně vystavena a odeslána!');
+                    loadPendingSessions(); // Znovu načíst seznam
+                    loadStatus(); // Znovu načíst daně
+                } else {
+                    alert('Chyba: ' + data.detail);
+                    btn.disabled = false;
+                    btn.innerText = "✅ Sezení proběhlo - Vystavit fakturu";
+                }
+            } catch (err) {
+                alert('Došlo k chybě připojení.');
+                btn.disabled = false;
+                btn.innerText = "✅ Sezení proběhlo - Vystavit fakturu";
+            }
+        }
+
+        async function cancelSession(id) {
+            if(!confirm('Opravdu chcete toto sezení stornovat? Klient nedorazil a faktura se nevystaví.')) return;
+            
+            const btn = document.getElementById(`btn-cancel-${id}`);
+            btn.disabled = true;
+            btn.innerText = "⏳ Stornuji...";
+
+            try {
+                const res = await fetch(`${API_URL}/sessions/${id}/cancel`, {
+                    method: 'POST',
+                    headers: { 'Authorization': AUTH_HEADER }
+                });
+                const data = await res.json();
+                
+                if(data.status === 'success') {
+                    alert('Sezení bylo úspěšně stornováno.');
+                    loadPendingSessions(); // Znovu načíst seznam
+                } else {
+                    alert('Chyba: ' + data.detail);
+                    btn.disabled = false;
+                    btn.innerText = "❌ Storno (Klient nepřišel)";
+                }
+            } catch (err) {
+                alert('Došlo k chybě připojení.');
+                btn.disabled = false;
+                btn.innerText = "❌ Storno (Klient nepřišel)";
+            }
+        }
     </script>
 </body>
 </html>

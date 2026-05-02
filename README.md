@@ -1,48 +1,77 @@
-# Motivus Web Application
+# Motivus Web Application & AI Účetní
 
-Tento repozitář obsahuje webovou a backendovou infrastrukturu projektu **Motivus**. 
+Tento repozitář obsahuje kompletní frontendovou prezentaci a backendovou architekturu pro projekt **Motivus**, včetně komplexního systému "AI Účetní" pro automatizaci financí a fakturace.
 
-## 🚀 Komponenty
+## 🚀 Architektura a Komponenty
 
-1. **Frontend (React + Vite + TailwindCSS)**
-   - Prezentační Single Page Aplikace (SPA) pro značku Motivus.
-   - Integrace s rezervačním systémem **Cal.com**.
-   - Moderní animace, Glassmorphism design a responzivní rozhraní.
+Systém je rozdělen do tří hlavních částí:
 
-2. **Backend: Platební brána & Fakturace (`/billing/`)**
-   - **Stripe Webhook Server** (`webhook_server.py`) - zachytává úspěšné platby z Cal.com / Stripe v měně CZK.
-   - **Fakturoid Integrace** (`fakturoid_client.py`) - automaticky vystavuje faktury zákazníkům přes API v3 po přijetí platby a odesílá je e-mailem.
+### 1. Frontend (React / Vanilla JS)
+- Webová prezentace s integrací rezervačního systému **Cal.com**.
+- Mobilní administrativní aplikace **Backstage** (`backstage.html`), která funguje jako kapesní AI Účetní. Chráněna PIN kódem. 
 
-3. **AI Účetní Engine (`/ai_ucetni/`)**
-   - Automatizovaný systém pro OSVČ v týmu Motivus.
-   - Obsahuje daňový kalkulátor pro rok 2026 (porovnává výhodnost paušální daně vs. skutečných výdajů).
-   - **GPT-4o Vision OCR:** Skript `ocr_pipeline.py` umožňuje naskenovat vyfocenou účtenku a automaticky z ní extrahovat strukturovaná data (DPH, IČO, částku a kategorii) do SQLite databáze.
+### 2. Platební a rezervační pipeline (Stripe + Fakturoid)
+- Zákazník platí zálohu za sezení přes Cal.com, což je procesováno službou **Stripe**.
+- Stripe Webhook Server (`billing/webhook_server.py`) zachytává událost `payment_intent.succeeded`.
+- **Dvoufázové fakturování:** Webhook ihned po platbě zálohy **nevystavuje** fakturu. Místo toho zapíše událost do databáze jako "Čekající sezení" (Pending Session).
+- Po reálném proběhnutí sezení obsluha v aplikaci `backstage.html` klikne na "Vystavit fakturu". V tu chvíli se volá **Fakturoid API v3**, které odečte zaplacenou zálohu a odešle klientovi konečnou fakturu. Pokud klient nedorazí, lze sezení "Stornovat" bez vystavení faktury.
 
-## ⚙️ Spuštění a Vývoj
-
-**Požadavky:**
-- Node.js & npm (pro frontend)
-- Python 3.10+ (pro webhooky a AI účetního)
-
-### Frontend
-```bash
-npm install
-npm run dev
-```
-
-### Backend (Stripe Webhook + Fakturoid)
-Ujistěte se, že máte `.env` soubor s vyplněnými klíči (`STRIPE_SECRET_KEY`, `FAKTUROID_CLIENT_ID`, atd.).
-```bash
-pip install -r requirements.txt  # pokud existuje
-python billing/webhook_server.py
-```
-*Server běží lokálně na portu 4242.*
-
-### AI Účetní
-```bash
-python ai_ucetni/main.py init
-python ai_ucetni/main.py status
-```
+### 3. AI Účetní Backend (FastAPI + SQLite + OpenAI)
+- Adresář `/ai_ucetni/`.
+- **FastAPI server** (`api.py`) obsluhuje mobilní aplikaci. Zajišťuje upload účtenek, listing čekajících sezení a povely k fakturaci. Vše chráněno HTTP Basic Auth.
+- **GPT-4o Vision OCR** (`ocr_pipeline.py`) - po uploadu vyfocené účtenky se pomocí AI vytěží data (Dodavatel, Částka, Kategorie) a ihned se propíší do SQLite databáze.
+- **Daňový kalkulátor 2026** - při každé akci (nový příjem, nová účtenka) systém real-time porovnává výhodnost placení daní formou *Výdajového paušálu* vs. *Skutečných výdajů* a doporučuje výhodnější variantu s přesným vyčíslením úspory.
 
 ---
-*Vytvořeno pro tým Motivus (2026).*
+
+## ⚙️ Produkční prostředí (Forpsi VPS)
+
+Systém běží na Forpsi Linux VPS, s nasazeným reverzním proxy serverem **Nginx** a SSL certifikátem (Let's Encrypt) na subdoméně `api.motivus.cz`.
+
+### Nginx Konfigurace
+- `https://api.motivus.cz/backstage.html` -> Vstup do mobilní aplikace.
+- `https://api.motivus.cz/api/*` -> Směřováno na FastAPI (`127.0.0.1:8000`).
+- `https://api.motivus.cz/webhook` -> Směřováno na Stripe Webhook server (`127.0.0.1:4242`).
+
+### Správa procesů na serveru
+Běží na pozadí pomocí `nohup`:
+1. **API Server:** 
+   ```bash
+   cd /var/www/motivus-web/ai_ucetni
+   nohup python3 -m uvicorn api:app --host 0.0.0.0 --port 8000 > ../api.log 2>&1 &
+   ```
+2. **Webhook Server:** 
+   ```bash
+   cd /var/www/motivus-web
+   nohup python3 billing/webhook_server.py > webhook.log 2>&1 &
+   ```
+
+---
+
+## 🔑 Environmentální proměnné (`.env`)
+
+K běhu jsou naprosto nezbytné následující klíče v souboru `.env`:
+
+```env
+# === FAKTUROID ===
+FAKTUROID_SLUG=...
+FAKTUROID_CLIENT_ID=...
+FAKTUROID_CLIENT_SECRET=...
+
+# === STRIPE ===
+# Hlavní API klíč (z Developers -> API keys). Slouží pro dotazování se na Stripe.
+STRIPE_SECRET_KEY=sk_live_...
+# Klíč pro webhook (z Developers -> Webhooks). Slouží k ověření pravosti příchozích zpráv od Stripe.
+STRIPE_WEBHOOK_SECRET=whsec_...
+
+# === OPENAI ===
+# Klíč pro čtení vyfocených účtenek pomocí GPT-4o
+OPENAI_API_KEY=sk-...
+```
+
+## 🔐 Přístupy
+- **Backstage aplikace (PIN):** `2026`
+- **API Basic Auth (Backend):** Uživatelské jméno: `motivus`, Heslo: `robot2026`
+
+---
+*Vytvořeno automatizovaně AI asistentem pro tým Motivus (2026).*

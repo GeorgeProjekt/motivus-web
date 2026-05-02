@@ -1,0 +1,4 @@
+# Zabezpečení proti stažení skrytých souborů (např. .env, .git)
+<FilesMatch "^\.">
+    Require all denied
+</FilesMatch>

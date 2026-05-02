@@ -3,10 +3,16 @@ from fastapi import FastAPI, File, UploadFile, Depends, HTTPException, status
 from fastapi.security import HTTPBasic, HTTPBasicCredentials
 from fastapi.middleware.cors import CORSMiddleware
 import secrets
+import sys
+sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 from ocr_pipeline import extract_receipt
-from database import init_db, add_expense, get_income_ytd, get_expenses_ytd
+from database import (init_db, add_expense, get_income_ytd, get_expenses_ytd, 
+                      get_pending_sessions, get_session, mark_session_invoiced, 
+                      mark_session_cancelled, add_income, get_provider)
 from tax_calculator import compare_strategies
+from billing.fakturoid_client import get_or_create_contact, create_invoice
 import shutil
+from datetime import datetime
 
 app = FastAPI(title="Motivus AI Účetní API")
 
@@ -87,6 +93,72 @@ async def upload_receipt(file: UploadFile = File(...), username: str = Depends(v
         
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
+
+@app.get("/api/pending-sessions")
+def list_pending_sessions(username: str = Depends(verify_credentials)):
+    """Vrací čekající sezení, která ještě nebyla fakturována."""
+    sessions = get_pending_sessions()
+    return {"sessions": sessions}
+
+@app.post("/api/sessions/{session_id}/invoice")
+def invoice_session(session_id: int, username: str = Depends(verify_credentials)):
+    """Vygeneruje finální fakturu ve Fakturoidu pro dané sezení."""
+    session = get_session(session_id)
+    if not session:
+        raise HTTPException(status_code=404, detail="Sezení nenalezeno")
+    if session['status'] == 'invoiced':
+        raise HTTPException(status_code=400, detail="Faktura již byla vystavena")
+
+    provider = get_provider(session['provider_id'])
+    
+    try:
+        # 1. Kontakt ve Fakturoidu
+        contact = get_or_create_contact(
+            name=session['client_name'] or session['client_email'].split("@")[0],
+            email=session['client_email'],
+            phone=session['client_phone'],
+        )
+        
+        # 2. Vystavení faktury (s odečtenou zálohou)
+        invoice = create_invoice(
+            contact_id=contact["id"],
+            service_name=session["service_name"],
+            total_price=session["total_price"],
+            deposit_paid=session["deposit_paid"],
+            provider_name=provider["name"] if provider else "Mgr. Jiří Synek",
+            provider_ico=provider["ico"] if provider else "24400505",
+            note=f"Záloha zaplacena online: {session['stripe_intent_id']}"
+        )
+        
+        # 3. Označení v DB a přidání příjmu
+        mark_session_invoiced(session_id)
+        
+        add_income(
+            provider_id=session['provider_id'],
+            amount=session['total_price'], # Do účetnictví se počítá celková částka
+            date_str=datetime.now().strftime("%Y-%m-%d"),
+            source="stripe_invoice",
+            client_name=session['client_name'],
+            service_name=session['service_name'],
+            invoice_id=str(invoice['id'])
+        )
+        
+        return {"status": "success", "invoice_id": invoice['id']}
+        
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Chyba při vystavování faktury: {str(e)}")
+
+@app.post("/api/sessions/{session_id}/cancel")
+def cancel_session(session_id: int, username: str = Depends(verify_credentials)):
+    """Stornuje čekající sezení, faktura se nevystaví."""
+    session = get_session(session_id)
+    if not session:
+        raise HTTPException(status_code=404, detail="Sezení nenalezeno")
+    if session['status'] != 'pending':
+        raise HTTPException(status_code=400, detail="Lze stornovat jen čekající sezení")
+        
+    mark_session_cancelled(session_id)
+    return {"status": "success", "message": "Sezení bylo stornováno."}
 
 if __name__ == "__main__":
     import uvicorn
