@@ -69,15 +69,65 @@
   <main>
 
     <!-- ========== HERO ========== -->
+    <style>
+      .hero-inner--cro {
+        text-align: center;
+        max-width: 900px;
+        margin: 0 auto;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+      .hero-motto--cro {
+        font-family: 'Cormorant Garamond', serif;
+        font-size: clamp(2.5rem, 5vw, 4.5rem);
+        font-weight: 400;
+        line-height: 1.1;
+        margin-bottom: 1.5rem;
+        color: var(--color-text);
+        text-wrap: balance;
+      }
+      .hero-subtitle--cro {
+        font-size: clamp(1.1rem, 2vw, 1.3rem);
+        color: var(--color-text-muted);
+        line-height: 1.6;
+        margin-bottom: 2.5rem;
+        max-width: 700px;
+        font-weight: 300;
+      }
+      .sublevere-label {
+        font-family: 'Cormorant Garamond', serif;
+        font-style: italic;
+        color: var(--color-accent);
+        font-size: 1.4rem;
+        margin-bottom: 1rem;
+        letter-spacing: 0.05em;
+      }
+    </style>
     <section class="hero" id="hero">
-      <div class="hero-inner">
+      <div class="hero-inner hero-inner--cro">
         <div class="hero-logo-wrapper">
           <img src="images/logo.jpeg" alt="Motivus logo" class="hero-logo-large">
         </div>
-        <p class="hero-label label">Motivus — sdružení OSVČ</p>
-        <h1 class="hero-motto">Sublevere Homines</h1>
-        <p class="hero-subtitle">Pozvedáme lidi. Bezpečný prostor pro zastavení, zorientování a posílení vztahů k sobě, partnerovi, dětem i životu.</p>
-        <a href="#sluzby" class="btn">Objevte naše služby</a>
+        <p class="sublevere-label">„Sublevere Homines“</p>
+        <h1 class="hero-motto--cro">Zastavte se, zorientujte se a získejte zpět kontrolu nad svým životem.</h1>
+        <p class="hero-subtitle--cro">Zklidnění, vnitřní stabilita a pevnější vztahy. Využijte náš systém 4 pilířů podle svých aktuálních potřeb – kompletně, nebo jen zčásti. Zcela bez nátlaku.</p>
+        <a href="#sluzby" class="btn">Nezávazně si promluvit (15 min)</a>
+        
+        <div class="trust-badges" style="display: flex; gap: 1.5rem; justify-content: center; margin-top: 2.5rem; margin-bottom: 4rem; flex-wrap: wrap;">
+          <div style="display: flex; align-items: center; gap: 0.5rem; font-size: 0.95rem; color: var(--color-text-muted);">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+            Živý člověk, ne chatbot
+          </div>
+          <div style="display: flex; align-items: center; gap: 0.5rem; font-size: 0.95rem; color: var(--color-text-muted);">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+            Zcela diskrétní hovor
+          </div>
+          <div style="display: flex; align-items: center; gap: 0.5rem; font-size: 0.95rem; color: var(--color-text-muted);">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+            Společně najdeme cestu
+          </div>
+        </div>
       </div>
       <div class="hero-scroll-hint">
         <span>scroll</span>
@@ -86,7 +136,7 @@
     </section>
 
     <!-- ========== MISE ========== -->
-    <section id="mise" style="padding-top: 3rem;">
+    <section id="mise" style="padding-top: 0; margin-top: -3rem;">
       <div class="container-narrow text-center">
         <div class="section-header reveal">
           <span class="label">Naše mise</span>
