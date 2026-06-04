@@ -564,15 +564,19 @@
           </div>
           <div class="form-group">
             <label for="message">Zpráva</label>
-            <textarea id="message" name="message" placeholder="Co teď prožíváte? Nemusíte se bát, toto zůstane jen mezi námi."></textarea>
+            <textarea id="message" name="message" placeholder="Napište nám, na čem chcete pracovat. Nemusíte se bát, toto zůstane jen mezi námi."></textarea>
           </div>
           <button type="submit" class="btn btn-filled" style="width: 100%; justify-content: center;">Odeslat zprávu</button>
         </form>
 
         <div class="reveal" style="margin-top: var(--space-lg);">
           <p class="muted" style="margin-bottom: var(--space-md);">
-            <strong>Kancelář a terapeutický prostor:</strong><br>
+            <strong>Motivus prostor:</strong><br>
             Krnovská 7, Opava (možnost parkování)
+          </p>
+          <p class="muted" style="margin-bottom: var(--space-md); font-size: var(--size-small);">
+            <strong>Sídlo:</strong><br>
+            Krumsín 147, 798 03
           </p>
           <p class="muted" style="font-size: var(--size-small);">Nebo nás najdete na:</p>
           <div style="display: flex; justify-content: center; gap: var(--space-md); margin-top: var(--space-sm);">
@@ -589,7 +593,7 @@
   <footer class="footer">
     <div class="container-narrow">
       <div class="footer-motto">„Sublevere Homines"</div>
-      <p class="footer-copy">© 2026 MOTIVUS — sdružení OSVČ se společným posláním. IČO: 24400505. Všechna práva vyhrazena.</p>
+      <p class="footer-copy">© 2026 MOTIVUS — sdružení OSVČ se společným posláním. IČO: 24400505. Sídlo: Krumsín 147, 798 03. Všechna práva vyhrazena.</p>
       <div class="footer-links">
         <a href="https://instagram.com/motivus.cz" target="_blank" rel="noopener">Instagram</a>
         <a href="mailto:info@motivus.cz">info@motivus.cz</a>
@@ -605,11 +609,76 @@
   <script src="js/nav.js"></script>
   <script src="js/contact.js?v=2"></script>
   <script>
-    // Placeholder logika pro rezervační tlačítka do doby, než bude napojen Cal.com
-    document.querySelectorAll('.btn-booking[data-cal-placeholder="true"]').forEach(btn => {
-      btn.addEventListener('click', () => {
-        alert('Tady brzy vyskočí krásný rezervační kalendář propojený s mým Google kalendářem. Zatím se prosím objednejte přes e-mail.');
+    // ─── Rezervace ────────────────────────────────────────────────────────────
+    // Cal.eu URL (aktivovat až bude systém připraven):
+    // const CAL_BOOKING_URL = "https://cal.eu/jiri-motivus";
+
+    // Dočasný modal — rezervační systém ve výstavbě
+    function showBookingModal() {
+      const overlay = document.createElement('div');
+      overlay.id = 'booking-modal-overlay';
+      overlay.style.cssText = `
+        position: fixed; inset: 0; z-index: 9999;
+        background: rgba(0,0,0,0.6); backdrop-filter: blur(4px);
+        display: flex; align-items: center; justify-content: center;
+        padding: 1.5rem; animation: fadeIn 0.2s ease;
+      `;
+
+      overlay.innerHTML = `
+        <div style="
+          background: var(--color-surface, #1a1a1a);
+          border: 1px solid var(--color-border, rgba(255,255,255,0.1));
+          border-radius: 1rem; padding: 2.5rem 2rem;
+          max-width: 420px; width: 100%; text-align: center;
+          box-shadow: 0 24px 60px rgba(0,0,0,0.5);
+        ">
+          <div style="font-size: 2rem; margin-bottom: 1rem;">📅</div>
+          <h3 style="
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.6rem; font-weight: 400;
+            color: var(--color-text, #fff);
+            margin-bottom: 0.75rem;
+          ">Rezervační systém je ve výstavbě</h3>
+          <p style="
+            color: var(--color-text-muted, rgba(255,255,255,0.6));
+            font-size: 0.95rem; line-height: 1.6;
+            margin-bottom: 1.75rem;
+          ">Termín si prozatím domluvte přímo přes WhatsApp.<br>Obvykle odpovídám do několika hodin.</p>
+          <a href="https://wa.me/420777319453" target="_blank" rel="noopener" style="
+            display: inline-flex; align-items: center; gap: 0.6rem;
+            background: #25D366; color: #fff;
+            padding: 0.9rem 1.75rem; border-radius: 0.6rem;
+            text-decoration: none; font-weight: 600;
+            font-size: 1rem; transition: opacity 0.2s;
+            margin-bottom: 1rem;
+          " onmouseover="this.style.opacity='0.85'" onmouseout="this.style.opacity='1'">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347"/>
+            </svg>
+            Napsat na WhatsApp
+          </a>
+          <br>
+          <button onclick="document.getElementById('booking-modal-overlay').remove()" style="
+            background: none; border: none;
+            color: var(--color-text-muted, rgba(255,255,255,0.5));
+            cursor: pointer; font-size: 0.9rem;
+            padding: 0.5rem 1rem; margin-top: 0.5rem;
+            transition: color 0.2s;
+          " onmouseover="this.style.color='var(--color-text, #fff)'" onmouseout="this.style.color='var(--color-text-muted, rgba(255,255,255,0.5))'">
+            Zavřít
+          </button>
+        </div>
+      `;
+
+      overlay.addEventListener('click', (e) => {
+        if (e.target === overlay) overlay.remove();
       });
+
+      document.body.appendChild(overlay);
+    }
+
+    document.querySelectorAll('.btn-booking[data-cal-placeholder="true"]').forEach(btn => {
+      btn.addEventListener('click', showBookingModal);
     });
   </script>
 
